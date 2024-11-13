@@ -10,7 +10,7 @@ module.exports = {
     entry: {
         main: [
             './src/index',
-            // './src/assets/scss/style.scss',
+            './src/assets/scss/style.scss',
         ],
         aboutus: [
             './src/about/index.js',
@@ -114,17 +114,8 @@ module.exports = {
                 ]
             },
             {
-                // test: /\.scss$/i,
                 test: /\.(sa|sc)ss$/i,
-                // type: "asset/resource",
-                // generator: {
-                //     filename: "static/css/bundle.css",
-                // },
-                // generator: {
-                //     filename: "bundle.css",
-                //   },
                 use: [
-                    // fallback to style-loader in development
                     process.env.NODE_ENV !== "production"
                         ? "style-loader"
                         : MiniCssExtractPlugin.loader,
@@ -139,11 +130,11 @@ module.exports = {
                     {
                         loader: 'sass-loader',
                         options: {
+                            api: "modern",
                             sourceMap: true,
                             sassOptions: {
-                                // outputStyle: "compressed",
-                                outputStyle: "expanded", // for development
-                            },
+                                outputStyle: "expanded",
+                            }
                         }
                     }
                 ],

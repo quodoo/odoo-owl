@@ -1,4 +1,8 @@
-@import "./colors.scss";
+// Replace
+// @import "./colors.scss";
+
+// With
+@use "./colors.scss" as *;
 
 h1 {
     color: $text-primary;
