@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  odoo-owl:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/app
