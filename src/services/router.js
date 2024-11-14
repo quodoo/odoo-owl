@@ -1,4 +1,4 @@
-import { reactive } from "@odoo/owl";
+import { reactive } from '@odoo/owl';
 
 // Create reactive state
 export const routeState = reactive({ 

@@ -1,6 +1,6 @@
-import { Component, xml } from "@odoo/owl";
-import { router, routeState } from "@services/router";
-import "./style.scss";
+import { Component, xml } from '@odoo/owl';
+import { router, routeState } from '@services/router';
+import './style.scss';
 
 class Header extends Component {
     static template = xml`

@@ -1,5 +1,5 @@
-import { Component, xml } from "@odoo/owl";
-import "./style.scss";
+import { Component, xml } from '@odoo/owl';
+import './style.scss';
 
 class AboutPage extends Component {
     static template = xml`

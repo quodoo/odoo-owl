@@ -8,13 +8,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: {
-        main: [
-            './src/index',
-            './src/assets/scss/style.scss',
-        ],
-        aboutus: [
-            './src/about/index.js',
-        ],
+        // main: [
+        //     './src/index',
+        //     './src/assets/scss/style.scss',
+        // ],
+        // aboutus: [
+        //     './src/about/index.js',
+        // ],
         // service: './src/service.js'
     },
     mode: 'development',
@@ -69,7 +69,7 @@ module.exports = {
         }
     },
     plugins: [
-        // new ESLintPlugin(),
+        new ESLintPlugin(),
         new CleanWebpackPlugin(),
         new ProvidePlugin({
             $: 'jquery',

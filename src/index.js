@@ -1,8 +1,8 @@
-import { mount } from "@odoo/owl";
-import MainLayout from "@layouts/MainLayout";
+import { mount } from '@odoo/owl';
+import MainLayout from '@layouts/MainLayout';
 
 // Global styles
-import "@scss/style.scss";
+import '@scss/style.scss';
 
 // Mount the application
-mount(MainLayout, document.getElementById("root"));
+mount(MainLayout, document.getElementById('root'));
