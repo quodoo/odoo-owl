@@ -12,15 +12,15 @@ class ContactPage extends Component {
                         <div class="info-items">
                             <div class="info-item">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <p>123 Business Street, Tech City, 12345</p>
+                                <p>Nam Tu Liem, Ha Noi, Viet Nam, 100000</p>
                             </div>
                             <div class="info-item">
                                 <i class="fas fa-phone"></i>
-                                <p>+1 (234) 567-8900</p>
+                                <p>+84 (97) 242-1977</p>
                             </div>
                             <div class="info-item">
                                 <i class="fas fa-envelope"></i>
-                                <p>contact@example.com</p>
+                                <p>trinhvanquangf1@gmail.com</p>
                             </div>
                         </div>
                     </div>

@@ -31,7 +31,7 @@ class Header extends Component {
                             <a t-on-click="() => this.navigate('/contact')" 
                                href="/contact" 
                                t-att-class="{ active: state.currentRoute === '/contact' }">
-                               Contact
+                               <i class="fas fa-envelope"></i> Contact
                             </a>
                         </li>
                     </ul>

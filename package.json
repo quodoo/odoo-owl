@@ -44,6 +44,7 @@
     "@odoo/owl": "^2.4.1",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.7.1",
     "materialize-css": "^1.0.0-rc.2",
     "mini-css-extract-plugin": "^2.8.1"

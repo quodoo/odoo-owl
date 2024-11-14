@@ -23,6 +23,7 @@ module.exports = {
         assetModuleFilename: '[path][name].[ext]'
     },
     resolve: {
+        modules: ['node_modules'],
         alias: {
             '@src': path.resolve(__dirname, 'src/'),
             '@assets': path.resolve(__dirname, 'src/assets/'),
@@ -76,7 +77,8 @@ module.exports = {
             jQuery: 'jquery',
             // cần sử dụng khi thêm jsquery library
             'window.$': 'jquery',
-            'window.jQuery': 'jquery'
+            'window.jQuery': 'jquery',
+            FontAwesome: '@fortawesome/fontawesome-free'
         }),
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
@@ -180,16 +182,15 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                test: /\.(woff|woff2|eot|ttf|otf|svg)$/i,
                 type: 'asset/resource',
                 generator: {
                     filename: 'assets/fonts/[name][ext][query]'
                 },
-                resolve: {
-                    alias: {
-                        '@assets': path.resolve(__dirname, 'src/assets/')
-                    }
-                }
+                include: [
+                    path.resolve(__dirname, 'src/assets/fonts'),
+                    path.resolve(__dirname, 'node_modules/@fortawesome/fontawesome-free/webfonts')
+                ]
             }
         ]
     },

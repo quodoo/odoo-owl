@@ -16,15 +16,15 @@ class AboutPage extends Component {
                         <h2>Our Team</h2>
                         <div class="team-grid">
                             <div class="team-member">
-                                <h3>John Doe</h3>
+                                <h3>Quang Trinh</h3>
                                 <p>Lead Developer</p>
                             </div>
                             <div class="team-member">
-                                <h3>Jane Smith</h3>
+                                <h3>Cursor AI</h3>
                                 <p>UX Designer</p>
                             </div>
                             <div class="team-member">
-                                <h3>Mike Johnson</h3>
+                                <h3>Gemini AI</h3>
                                 <p>Backend Engineer</p>
                             </div>
                         </div>
