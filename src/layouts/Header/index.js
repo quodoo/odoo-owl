@@ -1,6 +1,6 @@
-import { Component, xml } from '@odoo/owl';
-import { router, routeState } from '@services/router';
-import './style.scss';
+import { Component, xml } from "@odoo/owl";
+import { router, routeState } from "@services/router";
+import "./style.scss";
 
 class Header extends Component {
     static template = xml`
@@ -14,21 +14,21 @@ class Header extends Component {
                         <li>
                             <a t-on-click="() => this.navigate('/')" 
                                href="/" 
-                               t-att-class="{ active: state.currentRoute === '/' }">
+                               t-att-class="{ active: this.getCurrentRoute() === '/' }">
                                Home
                             </a>
                         </li>
                         <li>
                             <a t-on-click="() => this.navigate('/about')" 
                                href="/about" 
-                               t-att-class="{ active: state.currentRoute === '/about' }">
+                               t-att-class="{ active: this.getCurrentRoute() === '/about' }">
                                About
                             </a>
                         </li>
                         <li>
                             <a t-on-click="() => this.navigate('/contact')" 
                                href="/contact" 
-                               t-att-class="{ active: state.currentRoute === '/contact' }">
+                               t-att-class="{ active: this.getCurrentRoute() === '/contact' }">
                                Contact
                             </a>
                         </li>
@@ -42,9 +42,12 @@ class Header extends Component {
         this.state = routeState;
     }
 
+    getCurrentRoute() {
+        return window.location.pathname;
+    }
+
     navigate(path) {
         // Prevent default behavior
-        event.preventDefault();
         // Navigate using router
         router.navigate(path);
     }

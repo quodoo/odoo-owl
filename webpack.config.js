@@ -8,10 +8,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: {
-        // main: [
-        //     './src/index',
-        //     './src/assets/scss/style.scss',
-        // ],
+        main: [
+            './src/index',
+            // './src/assets/scss/style.scss',
+        ],
         // aboutus: [
         //     './src/about/index.js',
         // ],

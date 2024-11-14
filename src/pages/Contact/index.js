@@ -1,5 +1,5 @@
-import { Component, xml } from '@odoo/owl';
-import './style.scss';
+import { Component, xml } from "@odoo/owl";
+import "./style.scss";
 
 class ContactPage extends Component {
     static template = xml`
@@ -48,7 +48,7 @@ class ContactPage extends Component {
     onSubmit(ev) {
         ev.preventDefault();
         // Handle form submission here
-        console.log('Form submitted');
+        // console.log('Form submitted');
     }
 }
 

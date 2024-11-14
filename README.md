@@ -1,6 +1,6 @@
 # Odoo OWL Project Template
 
-A modern frontend project template using Odoo OWL framework with webpack configuration.
+A modern frontend project template using Odoo OWL framework with webpack configuration and Docker setup.
 
 ## Project Architecture
 
@@ -20,27 +20,25 @@ odoo-owl/
 │   ├── services/         # API calls, business logic
 │   ├── stores/           # State management
 │   └── utils/            # Helper functions, constants
-├── public/               # Static files
-├── tests/                # Test files
-└── config/              # Configuration files
+├── dist/                 # Build output
+├── nginx.conf           # Nginx configuration
+├── Dockerfile           # Node.js development environment
+├── docker-compose.yml   # Docker services configuration
+└── webpack.config.js    # Webpack configuration
 ```
 
 ## Features
 
+- **Docker Setup**: Complete development environment with Node.js and Nginx
 - **Modern Architecture**: Follows Odoo OWL best practices and conventions
-- **Component Organization**: Clear separation between common and specific components
-- **State Management**: Centralized state management in stores directory
-- **Business Logic**: Isolated business logic in services
-- **Custom Hooks**: Reusable hooks for common functionalities
-- **Asset Management**: Structured organization of styles, images, and fonts
-- **Maintainable Structure**: Easy to scale and maintain
+- **Hot Module Replacement**: Live reload with WebSocket support
+- **Nginx Reverse Proxy**: Production-grade web server configuration
 - **Development Tools**:
-  - Webpack for bundling
+  - Webpack 5 for bundling
   - SASS support
-  - Hot Module Replacement
-  - Source maps
   - ESLint for code quality
   - Absolute imports
+  - Source maps
 
 ## Getting Started
 
@@ -50,44 +48,28 @@ git clone [repository-url]
 cd odoo-owl
 ```
 
-2. Install dependencies
+2. Start the Docker environment
 ```bash
-npm install
+docker-compose up --build
 ```
 
-3. Start development server
-```bash
-npm run dev
-```
+The application will be available at:
+- http://localhost (Nginx proxy)
+- http://localhost:8080 (Direct webpack dev server)
 
-4. Build for production
-```bash
-npm run build
-```
+## Docker Services
 
-## Directory Details
+### Development Server (odoo-owl)
+- Node.js development environment
+- Webpack dev server with hot reload
+- Mounted volumes for live code updates
+- Runs on port 8080
 
-### `/src/components`
-- `common/`: Reusable components like buttons, inputs, modals
-- `specific/`: Feature-specific components tied to business logic
-
-### `/src/layouts`
-Layout components that define the structure of pages
-
-### `/src/pages`
-Page components that compose layouts and components
-
-### `/src/hooks`
-Custom OWL hooks for shared component logic
-
-### `/src/services`
-API calls and business logic implementation
-
-### `/src/stores`
-State management using OWL's reactive system
-
-### `/src/utils`
-Helper functions, constants, and utility code
+### Web Server (nginx)
+- Nginx reverse proxy
+- Static file serving
+- WebSocket proxy for hot reload
+- Runs on port 80
 
 ## Development Guidelines
 
@@ -103,16 +85,39 @@ Helper functions, constants, and utility code
 
 ## Available Scripts
 
+Inside Docker container:
+```bash
+# Development server
+docker-compose up
+
+# Lint files
+docker-compose exec odoo-owl npm run lint
+
+# Build for production
+docker-compose exec odoo-owl npm run build
+```
+
+Local development:
 - `npm run dev`: Start development server
 - `npm run build`: Build for production
 - `npm run lint`: Run ESLint
-- `npm run test`: Run tests
+- `npm run lint:fix`: Fix ESLint errors automatically
 
-## Configuration
+## Configuration Files
 
-- Webpack configuration in `webpack.config.js`
-- Path aliases in `jsconfig.json`
-- ESLint configuration in `.eslintrc.js`
+- `webpack.config.js`: Webpack bundler configuration
+- `nginx.conf`: Nginx reverse proxy settings
+- `Dockerfile`: Node.js development environment
+- `docker-compose.yml`: Multi-container Docker setup
+- `.eslintrc.js`: ESLint rules and settings
+
+## ESLint Configuration
+
+Current ESLint rules:
+- Enforces semicolons
+- Uses single quotes
+- Warns on unused variables
+- Warns on console statements
 
 ## Contributing
 
@@ -124,4 +129,4 @@ Helper functions, constants, and utility code
 
 ## License
 
-[Your License Here]
+[Open Source](LICENSE)

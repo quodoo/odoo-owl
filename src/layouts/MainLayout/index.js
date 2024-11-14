@@ -1,11 +1,11 @@
-import { Component, xml } from '@odoo/owl';
-import Header from '@layouts/Header';
-import Footer from '@layouts/Footer';
-import HomePage from '@pages/Home';
-import AboutPage from '@pages/About';
-import ContactPage from '@pages/Contact';
-import { routeState } from '@services/router';
-import './style.scss';
+import { Component, xml } from "@odoo/owl";
+import Header from "@layouts/Header";
+import Footer from "@layouts/Footer";
+import HomePage from "@pages/Home";
+import AboutPage from "@pages/About";
+import ContactPage from "@pages/Contact";
+import { routeState } from "@services/router";
+import "./style.scss";
 
 class MainLayout extends Component {
     static template = xml`
@@ -32,7 +32,7 @@ class MainLayout extends Component {
         this.state = routeState;
         
         // Listen for route changes
-        window.addEventListener('route-changed', () => {
+        window.addEventListener("route-changed", () => {
             this.render();
         });
     }

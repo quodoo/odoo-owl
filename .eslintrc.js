@@ -10,8 +10,8 @@ module.exports = {
     },
     "rules": {
         "semi": ["error", "always"],
-        "quotes": ["error", "single"],
+        "quotes": ["error", "double"],
         "no-unused-vars": "warn",
-        "no-console": "warn"
+        // "no-console": "warn"
     }
 }

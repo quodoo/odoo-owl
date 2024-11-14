@@ -106,3 +106,22 @@ typings/
 .DS_Store
 package-lock.json
 dist/*
+
+# Build output
+/public
+/dist
+
+# Dependencies
+/node_modules
+
+# Environment files
+.env
+.env.local
+
+# IDE files
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

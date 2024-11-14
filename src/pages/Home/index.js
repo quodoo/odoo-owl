@@ -1,7 +1,7 @@
 // // // src/components/Root.js -------------------------------------------------------
 
-import { Component, xml } from '@odoo/owl';
-import './style.scss';
+import { Component, xml } from "@odoo/owl";
+import "./style.scss";
 
 class HomePage extends Component {
     static template = xml`
