@@ -29,8 +29,13 @@ module.exports = {
             '@assets': path.resolve(__dirname, 'src/assets/'),
             '@scss': path.resolve(__dirname, 'src/assets/scss/'),
             '@components': path.resolve(__dirname, 'src/components/'),
+            '@common': path.resolve(__dirname, 'src/components/common/'),
             '@pages': path.resolve(__dirname, 'src/pages/'),
             '@layouts': path.resolve(__dirname, 'src/layouts/'),
+            '@hooks': path.resolve(__dirname, 'src/hooks/'),
+            '@services': path.resolve(__dirname, 'src/services/'),
+            '@stores': path.resolve(__dirname, 'src/stores/'),
+            '@utils': path.resolve(__dirname, 'src/utils/')
         },
         extensions: ['.xml', '.mjs', '.js', '.json', '.scss']
     },

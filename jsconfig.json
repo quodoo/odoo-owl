@@ -14,11 +14,26 @@
             "@components/*": [
                 "./src/components/*"
             ],
+            "@common/*": [
+                "./src/components/common/*"
+            ],
             "@pages/*": [
                 "./src/pages/*"
             ],
             "@layouts/*": [
                 "./src/layouts/*"
+            ],
+            "@hooks/*": [
+                "./src/hooks/*"
+            ],
+            "@services/*": [
+                "./src/services/*"
+            ],
+            "@stores/*": [
+                "./src/stores/*"
+            ],
+            "@utils/*": [
+                "./src/utils/*"
             ]
         },
         "checkJs": true,
