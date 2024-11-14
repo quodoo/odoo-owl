@@ -1,8 +1,22 @@
 # Odoo OWL Project Template
 
-A modern frontend project template using Odoo OWL framework with webpack configuration and Docker setup.
+A modern frontend project template using Odoo OWL framework with Webpack 5, SASS, Docker and Nginx.
 
-## Project Architecture
+## Features
+
+- 🦉 Odoo OWL Framework
+- 📦 Webpack 5 with Hot Module Replacement (HMR)
+- 🎨 SASS/SCSS support
+- 🐳 Docker & Docker Compose setup
+- 🚀 Production-ready Nginx configuration
+- 🔧 ESLint for code quality
+- 📱 Responsive design
+- 🎯 Code splitting and optimization
+- 🔍 Source maps for development
+- 🎁 Asset management (fonts, images)
+- 🌈 Font Awesome integration
+
+## Project Structure
 
 ```
 odoo-owl/
@@ -26,19 +40,6 @@ odoo-owl/
 ├── docker-compose.yml   # Docker services configuration
 └── webpack.config.js    # Webpack configuration
 ```
-
-## Features
-
-- **Docker Setup**: Complete development environment with Node.js and Nginx
-- **Modern Architecture**: Follows Odoo OWL best practices and conventions
-- **Hot Module Replacement**: Live reload with WebSocket support
-- **Nginx Reverse Proxy**: Production-grade web server configuration
-- **Development Tools**:
-  - Webpack 5 for bundling
-  - SASS support
-  - ESLint for code quality
-  - Absolute imports
-  - Source maps
 
 ## Getting Started
 
@@ -88,13 +89,14 @@ The application will be available at:
 Inside Docker container:
 ```bash
 # Development server
-docker-compose up
+docker-compose -f docker-compose.dev.yml up -d
 
 # Lint files
 docker-compose exec odoo-owl npm run lint
 
 # Build for production
-docker-compose exec odoo-owl npm run build
+
+docker-compose up --build
 ```
 
 Local development:
