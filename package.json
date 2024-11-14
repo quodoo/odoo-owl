@@ -5,8 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --watch",
-    "start": "webpack serve --open"
+    "dev": "webpack serve --mode development --open --hot",
+    "start": "webpack serve --open",
+    "build": "webpack --mode production",
+    "lint": "eslint src/**/*.{js,jsx}",
+    "lint:fix": "eslint src/**/*.{js,jsx} --fix"
   },
   "repository": {
     "type": "git",

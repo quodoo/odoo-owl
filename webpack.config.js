@@ -45,7 +45,28 @@ module.exports = {
         }],
         compress: true,
         port: 8080,
+        host: '0.0.0.0',
         historyApiFallback: true,
+        hot: true,
+        allowedHosts: 'all',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+            'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
+        },
+        client: {
+            webSocketURL: {
+                hostname: '0.0.0.0',
+                pathname: '/websocket',
+                protocol: 'http'
+            }
+        },
+        webSocketServer: {
+            type: 'ws',
+            options: {
+                path: '/websocket'
+            }
+        }
     },
     plugins: [
         // new ESLintPlugin(),

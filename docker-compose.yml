@@ -2,8 +2,33 @@ version: "3.9"
 
 services:
   odoo-owl:
+    container_name: odoo-owl
     build: .
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - "8080:8080"
+    networks:
+      - odoo-network
+    command: npm run dev
+
+  nginx:
+    container_name: odoo-nginx
+    image: nginx:alpine
     ports:
       - "80:80"
     volumes:
-      - ./:/app
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./dist:/usr/share/nginx/html
+    networks:
+      - odoo-network
+    environment:
+      - NGINX_ENTRYPOINT_QUIET_LOGS=1
+    depends_on:
+      - odoo-owl
+
+networks:
+  odoo-network:
+    name: odoo-network
+    driver: bridge
