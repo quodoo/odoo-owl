@@ -1,20 +1,140 @@
-// @import "../../assets/css/font.css";
-
+@use "fonts";
 @use "colors" as *;
 
-.task-list {
-  margin: 50px auto;
-  // background: aliceblue;
-  padding: 10px;
+.home-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
 
-  background: url("./img/bg.jpg")no-repeat center right;
+    .hero-section {
+        text-align: center;
+        padding: 4rem 0;
+        background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                    url("./img/bg.jpg") no-repeat center center;
+        background-size: cover;
+        border-radius: 8px;
+        margin-bottom: 3rem;
+
+        h1 {
+            @include fonts.font-bold;
+            font-size: 3.5rem;
+            // color: $primary;
+            margin-bottom: 1.5rem;
+        }
+
+        .subtitle {
+            @include fonts.font-secondary;
+            font-size: 1.2rem;
+            color: $text-secondary;
+        }
+    }
+
+    .content-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+
+        h2 {
+            @include fonts.font-bold;
+            color: $primary;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+
+        h3 {
+            @include fonts.font-secondary-bold;
+            color: $text-primary;
+            margin: 1rem 0;
+            font-size: 1.4rem;
+        }
+
+        p {
+            @include fonts.font-secondary;
+            color: $text-secondary;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                margin-bottom: 0.8rem;
+                color: $text-secondary;
+
+                a {
+                    color: $primary;
+                    text-decoration: none;
+                    transition: color 0.3s ease;
+
+                    &:hover {
+                        color: darken($primary, 10%);
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        .contact-info {
+            .developer-details {
+                background: lighten($background, 5%);
+                // padding: 1.5rem;
+                border-radius: 8px;
+                margin-bottom: 1.5rem;
+
+                p {
+                    margin: 0.5rem 0;
+
+                    &.name {
+                        font-size: 1.2rem;
+                        font-weight: bold;
+                        color: $text-primary;
+                    }
+
+                    a {
+                        color: $primary;
+                        text-decoration: none;
+                        
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+
+            .contact-button {
+                display: inline-block;
+                padding: 0.8rem 1.5rem;
+                background-color: $primary;
+                color: white;
+                text-decoration: none;
+                border-radius: 4px;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: darken($primary, 10%);
+                }
+            }
+        }
+    }
 }
 
-.task {
-  font-size: 18px;
-  color: $text-secondary;
-}
+// Responsive adjustments
+@media (max-width: 768px) {
+    .home-page {
+        padding: 1rem;
 
-.task.done {
-  opacity: 0.7;
+        .hero-section {
+            padding: 2rem 1rem;
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .content-section {
+            grid-template-columns: 1fr;
+        }
+    }
 }

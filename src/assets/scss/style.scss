@@ -1,24 +1,67 @@
-// Replace
-// @import "./colors.scss";
+@use "fonts";
+@use "colors";
 
-// With
-@use "./colors.scss" as *;
+body {
+    font-family: var(--font-secondary);
+}
 
-h1 {
-    color: $text-primary;
+h1, h2, h3 {
+    font-family: var(--font-primary);
 }
-h2 {
-    color: $text-secondary;
+
+h4, h5, h6 {
+    @include fonts.font-secondary-bold;
 }
-h3 {
-    color: $text-success;
-}
-h4 {
-    color: $text-danger;
-}
-h5 {
-    color: $text-waring;
-}
-h6 {
-    color: $text-info;
+
+
+.rainbow-text {
+    font-size: 2rem;
+    font-weight: bold;
+    
+    * {
+        text-decoration: none;
+        display: inline-block;
+        position: relative;
+
+        &.rainbow-text-item {
+            background-image: linear-gradient(
+                90deg,
+                #ff0000 0%,
+                #ff8000 14.28%,
+                #ffff00 28.56%,
+                #00ff00 42.84%,
+                #00ffff 57.12%,
+                #0000ff 71.4%,
+                #8000ff 85.68%,
+                #ff0000 100%
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: rainbow 4s linear infinite;
+
+            .highlight {
+                @include fonts.font-bold;
+                background: inherit;
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                
+                &::after {
+                    content: '';
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, 
+                        transparent 0%,
+                        rgba(255,255,255,0.4) 50%,
+                        transparent 100%);
+                    top: 0;
+                    left: -100%;
+                    animation: shine 3s infinite;
+                }
+            }
+        }
+    }
 }

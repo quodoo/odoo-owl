@@ -10,14 +10,13 @@ module.exports = {
     entry: {
         main: [
             './src/index',
-            // './src/assets/scss/style.scss',
+            './src/assets/scss/style.scss',
         ],
-        // aboutus: [
-        //     './src/about/index.js',
-        // ],
-        // service: './src/service.js'
+        about: './src/pages/About',
+        contact: './src/pages/Contact',
+        // Thêm các pages khác nếu cần
     },
-    mode: 'development',
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
@@ -27,6 +26,7 @@ module.exports = {
         alias: {
             '@src': path.resolve(__dirname, 'src/'),
             '@assets': path.resolve(__dirname, 'src/assets/'),
+            '@fonts': path.resolve(__dirname, 'src/assets/fonts/'),
             '@scss': path.resolve(__dirname, 'src/assets/scss/'),
             '@components': path.resolve(__dirname, 'src/components/'),
             '@common': path.resolve(__dirname, 'src/components/common/'),
@@ -85,21 +85,14 @@ module.exports = {
             chunkFilename: "[id].css",
         }),
         new HtmlWebpackPlugin({
-            title: 'Home Page',
+            title: 'Odoo OWL App',
             filename: 'index.html',
             template: 'src/index.html',
             inject: true,
             chunks: ['main'],
-            'meta': {
-                'viewport': 'width=device-width, initial-scale=1, shrink-to-fit=no',
+            meta: {
+                viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
             },
-        }),
-        new HtmlWebpackPlugin({
-            title: 'About us!',
-            filename: 'about.html',
-            // template: './src/about/index.html',
-            chunks: ['aboutus']
-
         }),
     ],
     module: {
@@ -171,14 +164,51 @@ module.exports = {
                     }
                 ],
             },
+            {
+                test: /\.xml$/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env']
+                        }
+                    },
+                    {
+                        loader: '@odoo/owl-loader'
+                    }
+                ]
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'assets/fonts/[name][ext][query]'
+                },
+                resolve: {
+                    alias: {
+                        '@assets': path.resolve(__dirname, 'src/assets/')
+                    }
+                }
+            }
         ]
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+            cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all'
+                },
+                common: {
+                    name: 'common',
+                    minChunks: 2,
+                    chunks: 'all',
+                    priority: -20
+                }
+            }
+        }
     }
-
-    // optimization: {
-    //     // Webpack Code Splitting
-    //     splitChunks: {
-    //         chunks: 'all'
-    //     }
-    // }
-
 }

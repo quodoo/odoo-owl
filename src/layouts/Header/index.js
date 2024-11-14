@@ -7,28 +7,30 @@ class Header extends Component {
         <header class="main-header">
             <div class="container">
                 <nav class="nav-menu">
-                    <div class="logo">
-                        <a t-on-click="() => this.navigate('/')" href="/">Odoo OWL</a>
+                    <div class="rainbow-text">
+                        <a t-on-click="() => this.navigate('/')" href="/" class="rainbow-text-item">
+                            <span class="highlight">Odoo OWL</span>
+                        </a>
                     </div>
                     <ul class="nav-links">
                         <li>
                             <a t-on-click="() => this.navigate('/')" 
                                href="/" 
-                               t-att-class="{ active: this.getCurrentRoute() === '/' }">
+                               t-att-class="{ active: state.currentRoute === '/' }">
                                Home
                             </a>
                         </li>
                         <li>
                             <a t-on-click="() => this.navigate('/about')" 
                                href="/about" 
-                               t-att-class="{ active: this.getCurrentRoute() === '/about' }">
+                               t-att-class="{ active: state.currentRoute === '/about' }">
                                About
                             </a>
                         </li>
                         <li>
                             <a t-on-click="() => this.navigate('/contact')" 
                                href="/contact" 
-                               t-att-class="{ active: this.getCurrentRoute() === '/contact' }">
+                               t-att-class="{ active: state.currentRoute === '/contact' }">
                                Contact
                             </a>
                         </li>
@@ -42,13 +44,7 @@ class Header extends Component {
         this.state = routeState;
     }
 
-    getCurrentRoute() {
-        return window.location.pathname;
-    }
-
     navigate(path) {
-        // Prevent default behavior
-        // Navigate using router
         router.navigate(path);
     }
 }

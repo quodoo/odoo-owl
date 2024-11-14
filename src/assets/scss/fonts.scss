@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+@font-face {
+    font-family: 'DancingScript';
+    src: url('@fonts/DancingScript/DancingScript-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'DancingScript';
+    src: url('@fonts/DancingScript/DancingScript-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --font-primary: 'DancingScript', cursive;
+    --font-secondary: 'Roboto', sans-serif;
+}
+
+@mixin font-regular {
+    font-family: var(--font-primary);
+    font-weight: normal;
+}
+
+@mixin font-bold {
+    font-family: var(--font-primary);
+    font-weight: bold;
+}
+
+@mixin font-secondary {
+    font-family: var(--font-secondary);
+    font-weight: normal;
+}
+
+@mixin font-secondary-bold {
+    font-family: var(--font-secondary);
+    font-weight: bold;
+} 

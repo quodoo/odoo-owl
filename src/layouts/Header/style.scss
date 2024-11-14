@@ -1,4 +1,5 @@
 @use "colors" as *;
+@use "fonts";
 
 .Header {
   display: flex;
@@ -54,15 +55,11 @@
         height: 70px;
     }
 
-    .logo {
-        font-size: 1.5rem;
-        font-weight: bold;
+    // .logo {
+    //     @include colors.rainbow-text;
+
         
-        a {
-            color: #333;
-            text-decoration: none;
-        }
-    }
+    // }
 
     .nav-links {
         display: flex;
@@ -84,6 +81,51 @@
                 color: #333;
                 font-weight: 600;
             }
+        }
+    }
+}
+
+@keyframes rainbow {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+        opacity: 0.5;
+    }
+    20% {
+        left: 100%;
+        opacity: 0.8;
+    }
+    100% {
+        left: 100%;
+        opacity: 0;
+    }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+    .main-header {
+        .nav-menu {
+            flex-direction: column;
+            height: auto;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            margin-bottom: 1rem;
+        }
+
+        .nav-links {
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
         }
     }
 }

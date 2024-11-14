@@ -1,6 +1,20 @@
+// @use "fonts";
+
+// Text colors
 $text-primary: #007bff;
 $text-secondary: #6c757d;
 $text-success: #28a745;
 $text-danger: #dc3545;
-$text-waring: #ffc107;
+$text-warning: #ffc107;
 $text-info: #17a2b8;
+
+// Theme colors
+$primary: #007bff;
+$secondary: #6c757d;
+$background: #f8f9fa;
+
+// Link colors
+$link-color: $primary;
+$link-hover: darken($primary, 10%);
+
+
