@@ -2,9 +2,9 @@
 
 import { Component, xml, mount } from "@odoo/owl";
 
-import '@components/Home/style.scss'
+import '@pages/Home/style.scss'
 
-import { Header } from "@components/layouts/Header/";
+import { Header } from "@layouts/Header/";
 
 
 

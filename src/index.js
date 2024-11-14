@@ -4,7 +4,7 @@ import '~/assets/scss/style.scss'
 import imgWebpack from '~/assets/images/webpack_image.png'
 
 import { __info__ } from "@odoo/owl";
-import { Root } from "@components/Home/";
+import { Root } from "@pages/Home/";
 import { mount }from "@odoo/owl";
 
 

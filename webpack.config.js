@@ -27,10 +27,12 @@ module.exports = {
         alias: {
             '@src': path.resolve(__dirname, 'src/'),
             '@assets': path.resolve(__dirname, 'src/assets/'),
+            '@scss': path.resolve(__dirname, 'src/assets/scss/'),
             '@components': path.resolve(__dirname, 'src/components/'),
-            
+            '@pages': path.resolve(__dirname, 'src/pages/'),
+            '@layouts': path.resolve(__dirname, 'src/layouts/'),
         },
-        extensions: ['.xml', '.mjs', '.js', '.json']
+        extensions: ['.xml', '.mjs', '.js', '.json', '.scss']
     },
     devServer: {
         static: [{
@@ -130,11 +132,14 @@ module.exports = {
                     {
                         loader: 'sass-loader',
                         options: {
-                            api: "modern",
                             sourceMap: true,
                             sassOptions: {
                                 outputStyle: "expanded",
-                            }
+                                includePaths: [
+                                    path.resolve(__dirname, 'src/assets/scss')
+                                ]
+                            },
+                            additionalData: `@use "sass:math"; @use "colors" as *;`
                         }
                     }
                 ],

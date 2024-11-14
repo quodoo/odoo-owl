@@ -2,7 +2,7 @@
 
 import { Component, xml, mount } from "@odoo/owl";
 
-import '@components/layouts/Header/style.scss'
+import '@layouts/Header/style.scss'
 
 
 class Task extends Component {

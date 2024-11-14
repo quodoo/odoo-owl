@@ -2,9 +2,27 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "~/*": [
+            "@src/*": [
                 "./src/*"
+            ],
+            "@assets/*": [
+                "./src/assets/*"
+            ],
+            "@scss/*": [
+                "./src/assets/scss/*"
+            ],
+            "@components/*": [
+                "./src/components/*"
+            ],
+            "@pages/*": [
+                "./src/pages/*"
+            ],
+            "@layouts/*": [
+                "./src/layouts/*"
             ]
-        }
-    }
+        },
+        "checkJs": true,
+        "moduleResolution": "node"
+    },
+    "exclude": ["node_modules", "dist"]
 }

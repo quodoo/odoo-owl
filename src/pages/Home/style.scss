@@ -1,10 +1,8 @@
 // @import "../../assets/css/font.css";
 
-@use "sass:math";
-@use "../../assets/scss/colors" as *;
+@use "colors" as *;
 
 .task-list {
-  width: 300px;
   margin: 50px auto;
   // background: aliceblue;
   padding: 10px;
@@ -14,7 +12,7 @@
 
 .task {
   font-size: 18px;
-  color: #111111;
+  color: $text-secondary;
 }
 
 .task.done {
