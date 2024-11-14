@@ -1,45 +1,53 @@
-// // // src/components/Root.js -------------------------------------------------------
+import { Component, xml } from "@odoo/owl";
+import { router, routeState } from "@services/router";
+import "./style.scss";
 
-import { Component, xml, mount } from "@odoo/owl";
-
-import '@layouts/Header/style.scss'
-
-
-class Task extends Component {
+class Header extends Component {
     static template = xml`
-    <div class="task" t-att-class="props.task.isCompleted ? 'done' : ''"> 
-        <input type="checkbox" t-att-checked="props.task.isCompleted" />
-        <span><t t-esc="props.task.text"/></span>
-    </div>
+        <header class="main-header">
+            <div class="container">
+                <nav class="nav-menu">
+                    <div class="logo">
+                        <a t-on-click="() => this.navigate('/')" href="/">Odoo OWL</a>
+                    </div>
+                    <ul class="nav-links">
+                        <li>
+                            <a t-on-click="() => this.navigate('/')" 
+                               href="/" 
+                               t-att-class="{ active: state.currentRoute === '/' }">
+                               Home
+                            </a>
+                        </li>
+                        <li>
+                            <a t-on-click="() => this.navigate('/about')" 
+                               href="/about" 
+                               t-att-class="{ active: state.currentRoute === '/about' }">
+                               About
+                            </a>
+                        </li>
+                        <li>
+                            <a t-on-click="() => this.navigate('/contact')" 
+                               href="/contact" 
+                               t-att-class="{ active: state.currentRoute === '/contact' }">
+                               Contact
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
     `;
 
-    static props = ["task"];
+    setup() {
+        this.state = routeState;
+    }
+
+    navigate(path) {
+        // Prevent default behavior
+        event.preventDefault();
+        // Navigate using router
+        router.navigate(path);
+    }
 }
 
-
-// Owl Components
-export class Header extends Component {
-    static template = xml`
-        <div class="task-list">
-            <t t-foreach="tasks" t-as="task" t-key="task.id">
-                <Task task="task" />
-            </t>
-        </div>
-    `;
-
-    static components = { Task };
-
-
-    tasks = [
-        {
-            id: 1,
-            text: "buy milk",
-            isCompleted: true,
-        },
-        {
-            id: 2,
-            text: "clean house",
-            isCompleted: false,
-        },
-    ];
-}
+export default Header;
