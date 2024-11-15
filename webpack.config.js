@@ -78,7 +78,7 @@ module.exports = {
             // cần sử dụng khi thêm jsquery library
             'window.$': 'jquery',
             'window.jQuery': 'jquery',
-            FontAwesome: '@fortawesome/fontawesome-free'
+            FontAwesome: '@fortawesome/fontawesome'
         }),
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
@@ -189,7 +189,7 @@ module.exports = {
                 },
                 include: [
                     path.resolve(__dirname, 'src/assets/fonts'),
-                    path.resolve(__dirname, 'node_modules/@fortawesome/fontawesome-free/webfonts')
+                    path.resolve(__dirname, 'node_modules/@fortawesome/fontawesome')
                 ]
             }
         ]

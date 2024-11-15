@@ -11,15 +11,15 @@ class ContactPage extends Component {
                         <h2>Get in Touch</h2>
                         <div class="info-items">
                             <div class="info-item">
-                                <i class="fas fa-map-marker-alt"></i>
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
                                 <p>Nam Tu Liem, Ha Noi, Viet Nam, 100000</p>
                             </div>
                             <div class="info-item">
-                                <i class="fas fa-phone"></i>
+                                <i class="fa fa-phone"></i>
                                 <p>+84 (97) 242-1977</p>
                             </div>
                             <div class="info-item">
-                                <i class="fas fa-envelope"></i>
+                                <i class="fa fa-envelope"></i>
                                 <p>trinhvanquangf1@gmail.com</p>
                             </div>
                         </div>
