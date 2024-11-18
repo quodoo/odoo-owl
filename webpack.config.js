@@ -17,6 +17,7 @@ module.exports = {
         // Thêm các pages khác nếu cần
     },
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+    devtool: 'inline-source-map',
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
@@ -36,7 +37,6 @@ module.exports = {
             '@hooks': path.resolve(__dirname, 'src/hooks/'),
             '@services': path.resolve(__dirname, 'src/services/'),
             '@stores': path.resolve(__dirname, 'src/stores/'),
-            '@utils': path.resolve(__dirname, 'src/utils/')
         },
         extensions: ['.xml', '.mjs', '.js', '.json', '.scss']
     },
@@ -171,13 +171,7 @@ module.exports = {
                 exclude: /node_modules/,
                 use: [
                     {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: ['@babel/preset-env']
-                        }
-                    },
-                    {
-                        loader: '@odoo/owl-loader'
+                        loader: 'raw-loader'
                     }
                 ]
             },

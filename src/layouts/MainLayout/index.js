@@ -6,24 +6,11 @@ import AboutPage from "@pages/About";
 import ContactPage from "@pages/Contact";
 import { routeState } from "@services/router";
 import "./style.scss";
+import MainLayoutXml from "./MainLayout.xml";
 
 class MainLayout extends Component {
     static template = xml`
-        <div class="main-layout">
-            <Header />
-            <main class="main-content">
-                <t t-if="state.currentRoute === '/'">
-                    <HomePage />
-                </t>
-                <t t-if="state.currentRoute === '/about'">
-                    <AboutPage />
-                </t>
-                <t t-if="state.currentRoute === '/contact'">
-                    <ContactPage />
-                </t>
-            </main>
-            <Footer />
-        </div>
+        ${MainLayoutXml}
     `;
 
     static components = { Header, Footer, HomePage, AboutPage, ContactPage };

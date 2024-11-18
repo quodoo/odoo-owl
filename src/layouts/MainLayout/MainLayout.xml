@@ -1,0 +1,17 @@
+<t t-name="main_layout">
+    <div class="main-layout">
+        <Header />
+        <main class="main-content">
+            <t t-if="state.currentRoute === '/'">
+                <HomePage />
+            </t>
+            <t t-if="state.currentRoute === '/about'">
+                <AboutPage />
+            </t>
+            <t t-if="state.currentRoute === '/contact'">
+                <ContactPage />
+            </t>
+        </main>
+        <Footer />
+    </div>
+</t>
