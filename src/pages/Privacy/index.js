@@ -1,7 +1,7 @@
 import { Component, xml } from "@odoo/owl";
 import "./style.scss";
 
-class PrivacyPage extends Component {
+export default class PrivacyPage extends Component {
     static template = xml`
         <div class="privacy-policy">
             <div class="py-5">
@@ -113,6 +113,4 @@ class PrivacyPage extends Component {
             </div>
         </div>
     `;
-}
-
-export default PrivacyPage; 
+};

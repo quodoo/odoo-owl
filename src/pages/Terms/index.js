@@ -1,7 +1,8 @@
 import { Component, xml } from "@odoo/owl";
 import "./style.scss";
 
-class TermsPage extends Component {
+
+export default class TermsPage extends Component {
     static template = xml`
         <div class="terms-of-service">
             <div class="container">
@@ -47,6 +48,4 @@ class TermsPage extends Component {
             </div>
         </div>
     `;
-}
-
-export default TermsPage; 
+}; 

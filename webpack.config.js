@@ -28,6 +28,7 @@ module.exports = {
         alias: {
             '@src': path.resolve(__dirname, 'src/'),
             '@assets': path.resolve(__dirname, 'src/assets/'),
+            '@images': path.resolve(__dirname, 'src/assets/images/'),
             '@fonts': path.resolve(__dirname, 'src/assets/fonts/'),
             '@scss': path.resolve(__dirname, 'src/assets/scss/'),
             '@components': path.resolve(__dirname, 'src/components/'),
@@ -38,7 +39,7 @@ module.exports = {
             '@services': path.resolve(__dirname, 'src/services/'),
             '@stores': path.resolve(__dirname, 'src/stores/'),
         },
-        extensions: ['.xml', '.mjs', '.js', '.json', '.scss']
+        extensions: ['.xml', '.mjs', '.js', '.json', '.scss', '.png', '.jpg', '.jpeg', '.gif', '.svg']
     },
     devServer: {
         static: [{
@@ -107,28 +108,10 @@ module.exports = {
                     options: {
                         presets: ['@babel/preset-env']
                     }
-                }
-            },
-            {
-                test: /\.(png|jpe?g|gif|svg)$/i,
-                type: 'asset',
-                parser: {
-                    // dung lượng nhỏ hơn 8kb thì chuyển thành base64 để hiển thị
-                    dataUrlCondition: {
-                        maxSize: 16 * 1024
-                    }
                 },
-                // generator: {
-                //     filename: 'static/images/[hash][ext][query]'
-                // }
-            },
-            {
-                test: /\.(ttf|woff|woff2)$/i,
-                type: 'asset/resource',
-                generator: {
-                    filename: 'static/fonts/[hash][ext][query]'
-                }
-
+                include: [
+                    path.resolve(__dirname, 'node_modules/bootstrap')
+                ]
             },
             {
                 test: /\.css$/i,
@@ -176,10 +159,23 @@ module.exports = {
                 ]
             },
             {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                type: 'asset/resource', // Changed to asset/resource
+                generator: {
+                    filename: 'static/src/images/[hash][ext][query]'
+                },
+                parser: {
+                    // dung lượng nhỏ hơn 8kb thì chuyển thành base64 để hiển thị
+                    dataUrlCondition: {
+                        maxSize: 16 * 1024
+                    }
+                },
+            },
+            {
                 test: /\.(woff|woff2|eot|ttf|otf|svg)$/i,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'assets/fonts/[name][ext][query]'
+                    filename: 'static/src/fonts/[name][ext][query]'
                 },
                 include: [
                     path.resolve(__dirname, 'src/assets/fonts'),
@@ -191,6 +187,7 @@ module.exports = {
     optimization: {
         splitChunks: {
             chunks: 'all',
+            maxSize: 244000,
             cacheGroups: {
                 vendors: {
                     test: /[\\/]node_modules[\\/]/,

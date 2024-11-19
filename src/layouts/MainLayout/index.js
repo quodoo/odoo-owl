@@ -10,11 +10,38 @@ import TermsPage from "@pages/Terms";
 import SitemapPage from "@pages/Sitemap";
 import { routeState } from "@services/router";
 import "./style.scss";
-import MainLayoutXml from "./MainLayout.xml";
 
 class MainLayout extends Component {
     static template = xml`
-        ${MainLayoutXml}
+        <t t-name="main_layout">
+            <div class="main-layout">
+                <Header />
+                <main class="main-content">
+                    <t t-if="state.currentRoute === '/'">
+                        <HomePage />
+                    </t>
+                    <t t-if="state.currentRoute === '/about'">
+                        <AboutPage />
+                    </t>
+                    <t t-if="state.currentRoute === '/contact'">
+                        <ContactPage />
+                    </t>
+                    <t t-if="state.currentRoute === '/market-trends'">
+                        <MarketTrendsPage />
+                    </t>
+                    <t t-if="state.currentRoute === '/privacy'">
+                        <PrivacyPage />
+                    </t>
+                    <t t-if="state.currentRoute === '/terms'">
+                        <TermsPage />
+                    </t>
+                    <t t-if="state.currentRoute === '/sitemap'">
+                        <SitemapPage />
+                    </t>
+                </main>
+                <Footer />
+            </div>
+        </t>
     `;
 
     static components = { Header, Footer, HomePage, AboutPage, ContactPage, MarketTrendsPage, PrivacyPage, TermsPage, SitemapPage };

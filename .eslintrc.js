@@ -1,17 +1,27 @@
 module.exports = {
     "env": {
         "browser": true,
-        "es2021": true
+        "es2022": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        // "plugin:prettier/recommended", // This line is correct
+        // "prettier" // This line is usually unnecessary and might cause conflict
+    ],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
+    "plugins": [
+        // "@odoo/owl",
+        // "prettier"
+    ],
     "rules": {
+        // "@odoo/owl/force-component-props-declaration": 2, // 1 for warning, 2 for error
         "semi": ["error", "always"],
         // "quotes": ["error", "double"],
         "no-unused-vars": "warn",
+        // "import/no-unresolved": "off",
         // "no-console": "warn"
     }
 }

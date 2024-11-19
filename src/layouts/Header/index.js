@@ -1,5 +1,8 @@
 import { Component, xml } from "@odoo/owl";
 import { router, routeState } from "@services/router";
+import logo from "@assets/images/logo.png";
+
+
 import "./style.scss";
 
 class Header extends Component {
@@ -59,11 +62,8 @@ class Header extends Component {
     setup() {
         this.state = {
             ...routeState,
-            logo: null
+            logo: logo
         };
-        
-        // Kiểm tra và load logo
-        this.loadLogo();
         
         // Xử lý scroll effect
         if (typeof window !== 'undefined') {
@@ -78,19 +78,6 @@ class Header extends Component {
         }
     }
 
-    async loadLogo() {
-        try {
-            // Kiểm tra xem logo có tồn tại không
-            const logoPath = '/src/assets/images/logo.png';
-            const response = await fetch(logoPath);
-            if (response.ok) {
-                this.state.logo = logoPath;
-                this.render();
-            }
-        } catch (error) {
-            console.log(`Logo not found, using text instead ${error}`);
-        }
-    }
 
     navigate(path) {
         router.navigate(path);

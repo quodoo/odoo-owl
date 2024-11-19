@@ -1,7 +1,7 @@
 import { Component, xml } from "@odoo/owl";
 import "./style.scss";
 
-class SitemapPage extends Component {
+export default class SitemapPage extends Component {
     static template = xml`
         <div class="sitemap">
             <div class="container">
@@ -48,6 +48,4 @@ class SitemapPage extends Component {
             </div>
         </div>
     `;
-}
-
-export default SitemapPage; 
+};
