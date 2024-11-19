@@ -61,7 +61,7 @@ class CryptoDetail extends Component {
             }
         } catch (error) {
             console.error('Error loading coin data:', error);
-            this.state.error = 'Failed to load coin data';
+            this.state.error = `Failed to load coin data please try again later. ${error}`;
             this.state.loading = false;
         }
     }

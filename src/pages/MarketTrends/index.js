@@ -1,10 +1,10 @@
 import { Component, xml, useState, onWillStart } from "@odoo/owl";
-import TrendingTrends from "../../components/TrendingTrends/TrendingTrends";
-import CryptoDetail from "../../components/CryptoDetail/CryptoDetail";
+import TrendingTrends from "@components/TrendingTrends/TrendingTrends";
+import CryptoDetail from "@components/CryptoDetail/CryptoDetail";
 import "./style.scss";
-import { debounce } from "../../utils/helpers";
-import { CryptoApiService } from "../../services/cryptoApi";
-import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
+import { debounce } from "@utils/helpers";
+import { CryptoApiService } from "@services/cryptoApi";
+import LoadingIndicator from "@components/LoadingIndicator/LoadingIndicator";
 import { CRYPTO_IDS, COIN_IMAGE_MAPPING } from '../../constants/crypto';
 
 // Constants

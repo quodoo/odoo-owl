@@ -3,43 +3,43 @@
         "baseUrl": ".",
         "paths": {
             "@src/*": [
-                "./src/*"
+                "src/*"
             ],
             "@assets/*": [
-                "./src/assets/*"
+                "src/assets/*"
             ],
             "@images/*": [
-                "./src/assets/images/*"
+                "src/assets/images/*"
             ],
             "@scss/*": [
-                "./src/assets/scss/*"
+                "src/assets/scss/*"
             ],
             "@components/*": [
-                "./src/components/*"
+                "src/components/*"
             ],
             "@common/*": [
-                "./src/components/common/*"
+                "src/components/common/*"
             ],
             "@pages/*": [
-                "./src/pages/*"
+                "src/pages/*"
             ],
             "@layouts/*": [
-                "./src/layouts/*"
+                "src/layouts/*"
             ],
             "@hooks/*": [
-                "./src/hooks/*"
+                "src/hooks/*"
             ],
             "@services/*": [
-                "./src/services/*"
+                "src/services/*"
             ],
             "@stores/*": [
-                "./src/stores/*"
+                "src/stores/*"
             ],
             "@utils/*": [
-                "./src/utils/*"
+                "src/utils/*"
             ]
         },
-        "checkJs": true,
+        "checkJs": false,
         "moduleResolution": "node"
     },
     "exclude": ["node_modules", "dist"]

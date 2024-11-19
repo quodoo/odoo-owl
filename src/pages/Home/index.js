@@ -1,6 +1,6 @@
 import { Component, xml } from "@odoo/owl";
 import "./style.scss";
-import MarketChart from "../../components/MarketChart/MarketChart";
+import MarketChart from "@components/MarketChart/MarketChart";
 
 class HeroSection extends Component {}
 HeroSection.template = xml`
