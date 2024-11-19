@@ -1,0 +1,291 @@
+.market-trends-page {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+        }
+    }
+
+    .market-trends-content {
+        .market-summary {
+            margin-top: 4rem;
+            
+            h2 {
+                font-size: 2rem;
+                color: #2c3e50;
+                margin-bottom: 2rem;
+                text-align: center;
+            }
+
+            .summary-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+                padding: 1rem;
+
+                .summary-card {
+                    position: relative;
+                    background: white;
+                    border-radius: 12px;
+                    padding: 1.5rem;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    transition: transform 0.2s ease-in-out;
+
+                    &:hover {
+                        transform: translateY(-5px);
+                    }
+
+                    h3 {
+                        font-size: 1.25rem;
+                        color: #2c3e50;
+                        margin-bottom: 1rem;
+                    }
+
+                    .trend-value {
+                        font-size: 1.5rem;
+                        font-weight: 600;
+                        margin-bottom: 0.5rem;
+
+                        &.positive {
+                            color: #2ecc71;
+                        }
+
+                        &.negative {
+                            color: #e74c3c;
+                        }
+                    }
+
+                    .trend-description {
+                        color: #666;
+                        font-size: 0.95rem;
+                        line-height: 1.5;
+                    }
+
+                    .stock-details {
+                        margin-top: 1rem;
+                        padding-top: 0.5rem;
+                        border-top: 1px solid #eee;
+                        font-size: 0.9rem;
+                        color: #666;
+
+                        .volume {
+                            margin-bottom: 0.25rem;
+                        }
+
+                        .update-time {
+                            font-size: 0.8rem;
+                        }
+                    }
+
+                    .trend-change {
+                        display: inline-block;
+                        padding: 0.25rem 0.5rem;
+                        border-radius: 4px;
+                        font-weight: 500;
+
+                        &.positive {
+                            background-color: rgba(46, 204, 113, 0.1);
+                            color: #2ecc71;
+                        }
+
+                        &.negative {
+                            background-color: rgba(231, 76, 60, 0.1);
+                            color: #e74c3c;
+                        }
+                    }
+
+                    .crypto-header {
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 1rem;
+
+                        .crypto-icon {
+                            width: 32px;
+                            height: 32px;
+                            margin-right: 1rem;
+                        }
+
+                        .crypto-title {
+                            h3 {
+                                margin: 0;
+                                font-size: 1.25rem;
+                                color: #2c3e50;
+                            }
+
+                            .crypto-symbol {
+                                font-size: 0.9rem;
+                                color: #666;
+                                margin-left: 0.5rem;
+                            }
+                        }
+                    }
+
+                    .crypto-details {
+                        margin-top: 1rem;
+                        padding-top: 0.5rem;
+                        border-top: 1px solid #eee;
+
+                        .detail-row {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-bottom: 0.5rem;
+                            font-size: 0.9rem;
+
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+
+                            .label {
+                                color: #666;
+                            }
+
+                            .value {
+                                color: #2c3e50;
+                                font-weight: 500;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .loading-indicator {
+        text-align: center;
+        padding: 2rem;
+
+        .loader {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+    }
+
+    .error-message {
+        text-align: center;
+        padding: 2rem;
+        color: #e74c3c;
+
+        button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+
+            &:hover {
+                background: #2980b9;
+            }
+        }
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 3rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin: 2rem 0;
+
+        i {
+            font-size: 3rem;
+            color: #cbd5e0;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #718096;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .retry-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+
+            i {
+                font-size: 1rem;
+                color: white;
+                margin-right: 0.5rem;
+                margin-bottom: 0;
+            }
+
+            &:hover {
+                background: #2980b9;
+            }
+        }
+    }
+
+    .last-updated {
+        font-size: 0.9rem;
+        color: #718096;
+        margin-top: 0.5rem;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .market-trends-page {
+        padding: 1rem;
+
+        .page-header {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        .market-summary {
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    }
+} 

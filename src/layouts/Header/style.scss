@@ -39,55 +39,114 @@
 }
 
 .main-header {
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 1rem;
-    }
+    .navbar {
+        padding: 0.5rem 0;
+        transition: all 0.3s ease;
 
-    .nav-menu {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 70px;
-    }
-
-    // .logo {
-    //     @include colors.rainbow-text;
-
-        
-    // }
-
-    .nav-links {
-        display: flex;
-        gap: 2rem;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-
-        a {
-            color: #666;
-            text-decoration: none;
-            transition: color 0.3s ease;
-
-            &:hover {
-                color: #333;
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            
+            .navbar-logo {
+                height: 40px;
+                width: auto;
+                transition: transform 0.3s ease;
             }
 
-            &.active {
-                color: #333;
-                font-weight: 600;
+            &:hover {
+                .navbar-logo {
+                    transform: scale(1.05);
+                }
+            }
+            
+            .rainbow-text {
+                background: linear-gradient(
+                    45deg,
+                    #ff6b6b,
+                    #4ecdc4,
+                    #45b7d1,
+                    #96c93d
+                );
+                background-size: 200% auto;
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: rainbow 3s ease infinite;
+            }
+        }
+
+        .navbar-nav {
+            .nav-item {
+                margin-left: 0.5rem;
+                
+                .nav-link {
+                    color: #666;
+                    font-weight: 500;
+                    padding: 0.5rem 1rem;
+                    border-radius: 0.5rem;
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        color: #3498db;
+                        background: rgba(52, 152, 219, 0.1);
+                    }
+
+                    &.active {
+                        color: #3498db;
+                        background: rgba(52, 152, 219, 0.1);
+                    }
+
+                    i {
+                        font-size: 0.9rem;
+                    }
+                }
+            }
+        }
+
+        // Màu và style cho toggle button
+        .navbar-toggler {
+            border: none;
+            padding: 0.5rem;
+            
+            &:focus {
+                box-shadow: none;
+                outline: none;
+            }
+        }
+
+        // Style cho mobile menu
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                background: white;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                margin-top: 1rem;
+
+                .nav-item {
+                    margin: 0.5rem 0;
+                    
+                    .nav-link {
+                        padding: 0.75rem 1rem;
+                    }
+                }
             }
         }
     }
+
+    // Spacer để tránh content bị che bởi fixed navbar
+    .navbar-spacer {
+        height: 65px;
+    }
 }
 
+// Animation cho rainbow text
 @keyframes rainbow {
     0% {
         background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
     }
     100% {
         background-position: 200% 50%;
@@ -109,23 +168,8 @@
     }
 }
 
-// Responsive styles
-@media (max-width: 768px) {
-    .main-header {
-        .nav-menu {
-            flex-direction: column;
-            height: auto;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            margin-bottom: 1rem;
-        }
-
-        .nav-links {
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-    }
+// Thêm shadow khi scroll
+.navbar.scrolled {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.95) !important;
 }

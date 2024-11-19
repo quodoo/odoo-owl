@@ -11,6 +11,18 @@
             <t t-if="state.currentRoute === '/contact'">
                 <ContactPage />
             </t>
+            <t t-if="state.currentRoute === '/market-trends'">
+                <MarketTrendsPage />
+            </t>
+            <t t-if="state.currentRoute === '/privacy'">
+                <PrivacyPage />
+            </t>
+            <t t-if="state.currentRoute === '/terms'">
+                <TermsPage />
+            </t>
+            <t t-if="state.currentRoute === '/sitemap'">
+                <SitemapPage />
+            </t>
         </main>
         <Footer />
     </div>

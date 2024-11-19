@@ -1,0 +1,109 @@
+.trending-trends {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    h2 {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #333;
+        font-size: 2rem;
+    }
+
+    .loading {
+        text-align: center;
+        padding: 2rem;
+        font-size: 1.2rem;
+        color: #666;
+    }
+
+    .trends-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+
+    .trend-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+            transform: translateY(-5px);
+        }
+
+        .trend-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: #2c3e50;
+        }
+
+        .trend-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .trend-metrics {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 0.75rem;
+            border-top: 1px solid #eee;
+
+            .trend-price {
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: #2c3e50;
+            }
+
+            .trend-change {
+                padding: 0.25rem 0.5rem;
+                border-radius: 4px;
+                font-weight: 500;
+
+                &.positive {
+                    background-color: rgba(52, 211, 153, 0.1);
+                    color: #10b981;
+                }
+
+                &.negative {
+                    background-color: rgba(239, 68, 68, 0.1);
+                    color: #ef4444;
+                }
+            }
+        }
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .trending-trends {
+        padding: 1rem;
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        .trends-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .trend-card {
+            padding: 1rem;
+
+            .trend-title {
+                font-size: 1.1rem;
+            }
+
+            .trend-description {
+                font-size: 0.9rem;
+            }
+        }
+    }
+} 

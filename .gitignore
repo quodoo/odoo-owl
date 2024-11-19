@@ -125,3 +125,7 @@ dist/*
 # OS files
 .DS_Store
 Thumbs.db
+localhost.crt
+localhost.key
+odoo-local.com.crt
+odoo-local.com.key

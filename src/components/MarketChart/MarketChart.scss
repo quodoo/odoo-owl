@@ -1,0 +1,71 @@
+.market-chart-container {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+    width: 100%;
+    max-width: 100%;
+
+    .chart-header {
+        text-align: center;
+        margin-bottom: 2rem;
+
+        h2 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1rem;
+        }
+    }
+
+    .chart-wrapper {
+        height: 500px;
+        position: relative;
+        width: 100%;
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .error-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #e74c3c;
+            font-size: 1.1rem;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .market-chart-container {
+        padding: 1rem;
+        margin: 1rem 0;
+
+        .chart-header {
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .chart-wrapper {
+            height: 300px;
+        }
+    }
+} 

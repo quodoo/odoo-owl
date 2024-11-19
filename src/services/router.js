@@ -1,4 +1,5 @@
 import { reactive } from "@odoo/owl";
+// import MarketTrendsPage from "../pages/MarketTrends";
 
 // Create reactive state
 const routeState = reactive({ 

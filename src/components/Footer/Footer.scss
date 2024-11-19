@@ -1,0 +1,120 @@
+.main-footer {
+    background: #f8f9fa;
+    padding: 4rem 0 2rem;
+    margin-top: 4rem;
+    border-top: 1px solid #eee;
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 3rem;
+
+        .footer-section {
+            h2 {
+                font-size: 1.5rem;
+                color: #2c3e50;
+                margin-bottom: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+                color: #34495e;
+                margin: 1rem 0;
+            }
+
+            p {
+                color: #666;
+                line-height: 1.6;
+                margin-bottom: 1rem;
+            }
+
+            ul {
+                list-style: none;
+                padding: 0;
+
+                li {
+                    margin-bottom: 0.8rem;
+
+                    a {
+                        color: #3498db;
+                        text-decoration: none;
+                        transition: color 0.3s ease;
+
+                        &:hover {
+                            color: #2980b9;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+
+            .developer-details {
+                background: white;
+                padding: 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                margin-bottom: 1.5rem;
+
+                p {
+                    margin: 0.5rem 0;
+
+                    &.name {
+                        font-size: 1.2rem;
+                        font-weight: bold;
+                        color: #2c3e50;
+                    }
+
+                    a {
+                        color: #3498db;
+                        text-decoration: none;
+                        
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+
+            .contact-button {
+                display: inline-block;
+                padding: 0.8rem 1.5rem;
+                background-color: #3498db;
+                color: white;
+                text-decoration: none;
+                border-radius: 4px;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: #2980b9;
+                }
+            }
+        }
+    }
+
+    .footer-bottom {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid #eee;
+
+        p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .main-footer {
+        padding: 2rem 0 1rem;
+
+        .footer-content {
+            padding: 0 1rem;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+    }
+} 
