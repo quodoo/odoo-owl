@@ -5,16 +5,13 @@ module.exports = {
     },
     "extends": [
         "eslint:recommended",
-        // "plugin:prettier/recommended", // This line is correct
-        // "prettier" // This line is usually unnecessary and might cause conflict
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
     "plugins": [
-        // "@odoo/owl",
-        // "prettier"
+        "@odoo/owl",
     ],
     "rules": {
         // "@odoo/owl/force-component-props-declaration": 2, // 1 for warning, 2 for error
