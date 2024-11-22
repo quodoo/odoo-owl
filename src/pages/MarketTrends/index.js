@@ -141,10 +141,10 @@ class MarketTrendsPage extends Component {
                     </t>
                     <t t-elif="state.error and !state.cryptoData.length">
                         <div class="no-data">
-                            <i class="fas fa-database"></i>
+                            <i class="fa fa-database"></i>
                             <p t-esc="state.error"/>
                             <button t-on-click="fetchCryptoData" class="retry-button">
-                                <i class="fas fa-sync"></i> Retry
+                                <i class="fa fa-sync"></i> Retry
                             </button>
                         </div>
                     </t>
