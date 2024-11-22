@@ -3,8 +3,9 @@ import Header from "@layouts/Header";
 import Footer from "@layouts/Footer";
 import HomePage from "@pages/Home";
 import AboutPage from "@pages/About";
+import ShopPage from "@pages/shop";
 import ProductListPage from "@pages/shop/ProductList";
-import ProductDetailPage from "@pages/shop/ProductDetail";
+import ProductDetailPage from "@src/components/shop/ProductDetail";
 import CartPage from "@pages/shop/Cart";
 import { routeState } from "@services/router";
 import "./style.scss";
@@ -22,7 +23,7 @@ class MainLayout extends Component {
                         <AboutPage />
                     </t>
                     <t t-if="state.currentRoute === '/shop'">
-                        <ProductListPage />
+                        <ShopPage />
                     </t>
                     <t t-if="state.currentRoute.startsWith('/shop/product/')">
                         <ProductDetailPage productId="getProductId()" />
@@ -41,6 +42,7 @@ class MainLayout extends Component {
         Footer, 
         HomePage, 
         AboutPage, 
+        ShopPage,
         ProductListPage,
         ProductDetailPage,
         CartPage

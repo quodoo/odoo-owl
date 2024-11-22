@@ -1,93 +1,146 @@
-import { Component, xml } from "@odoo/owl";
-import { ProductCard } from "../ProductCard";
+import { Component, xml, useState } from "@odoo/owl";
+import { productHelpers } from "@utils/helpers";
 import "./style.scss";
+import ProductDetail from "@components/shop/ProductDetail";
+
 
 export class ProductGrid extends Component {
     static template = xml`
-        <div class="product-grid">
-            <div class="grid-controls" t-if="props.showControls">
-                <div class="view-options">
-                    <button class="view-btn" 
-                            t-att-class="{ active: state.viewMode === 'grid' }"
-                            t-on-click="() => this.setViewMode('grid')">
-                        <i class="fa fa-th-large"></i>
-                    </button>
-                    <button class="view-btn"
-                            t-att-class="{ active: state.viewMode === 'list' }"
-                            t-on-click="() => this.setViewMode('list')">
-                        <i class="fa fa-list"></i>
-                    </button>
-                </div>
-                <div class="sort-options">
-                    <select t-on-change="onSortChange">
-                        <option value="featured">Featured</option>
-                        <option value="price-low">Price: Low to High</option>
-                        <option value="price-high">Price: High to Low</option>
-                        <option value="newest">Newest First</option>
-                    </select>
-                </div>
-            </div>
-
-            <div t-attf-class="products-container {{ state.viewMode }}">
+        <div class="product-grid" t-att-class="props.viewMode">
+            <div class="products-container" t-att-class="props.viewMode">
                 <t t-foreach="props.products" t-as="product" t-key="product.id">
-                    <ProductCard 
-                        product="product"
-                        onQuickView="(product) => this.onQuickView(product)"
-                        onAddToCart="(product) => this.onAddToCart(product)"
-                        onToggleWishlist="(product) => this.onToggleWishlist(product)"
-                    />
+                    <div class="product-card" t-on-click="() => this.showProductDetail(product)">
+                        <!-- Badges -->
+                        <div class="product-badges">
+                            <span t-if="product.discount" class="badge discount">
+                                -<t t-esc="product.discount"/>%
+                            </span>
+                            <span t-if="isNew(product)" class="badge new">New</span>
+                        </div>
+
+                        <!-- Product Image -->
+                        <div class="product-image">
+                            <img t-att-src="product.image" t-att-alt="product.name"/>
+                            
+                            <!-- Quick Actions -->
+                            <div class="product-actions">
+                                <button 
+                                    class="action-btn quick-view"
+                                    t-on-click="() => this.props.onQuickView(product)"
+                                    title="Quick View">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                                <button 
+                                    class="action-btn add-to-wishlist"
+                                    t-on-click="() => this.props.onAddToWishlist(product)"
+                                    title="Add to Wishlist">
+                                    <i class="fa fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Product Info -->
+                        <div class="product-info">
+                            <!-- Brand -->
+                            <div class="product-brand" t-if="product.brand">
+                                <span t-esc="product.brand"/>
+                            </div>
+
+                            <!-- Name -->
+                            <h3 class="product-name">
+                                <a href="#" t-esc="product.name"/>
+                            </h3>
+
+                            <!-- Rating -->
+                            <div class="product-rating" t-if="product.rating">
+                                <div class="stars">
+                                    <t t-foreach="[1,2,3,4,5]" t-as="star" t-key="star">
+                                        <i t-att-class="getStarClass(star, product.rating)"/>
+                                    </t>
+                                </div>
+                                <span class="rating-count">(<t t-esc="product.rating"/>)</span>
+                            </div>
+
+                            <!-- Price -->
+                            <div class="product-price">
+                                <t t-if="product.discount">
+                                    <span class="original-price" t-esc="formatPrice(product.price * (1 + product.discount/100))"/>
+                                </t>
+                                <span class="current-price" t-esc="formatPrice(product.price)"/>
+                            </div>
+
+                            <!-- Stock Status -->
+                            <div class="stock-status" t-if="product.stock !== undefined">
+                                <t t-if="product.stock > 0">
+                                    <span class="in-stock">
+                                        <i class="fa fa-check"></i> In Stock
+                                    </span>
+                                </t>
+                                <t t-else="">
+                                    <span class="out-of-stock">
+                                        <i class="fa fa-times"></i> Out of Stock
+                                    </span>
+                                </t>
+                            </div>
+
+                            <!-- Add to Cart Button -->
+                            <button 
+                                class="add-to-cart-btn"
+                                t-on-click="() => this.props.onAddToCart(product)"
+                                t-att-disabled="!product.stock">
+                                <i class="fa fa-shopping-cart"></i>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
                 </t>
             </div>
-
-            <div t-if="props.products.length === 0" class="no-products">
-                <i class="fa fa-search fa-3x"></i>
-                <p>No products found</p>
-            </div>
         </div>
+        <ProductDetail 
+            t-if="state.selectedProduct"
+            product="state.selectedProduct"
+            onClose="() => this.closeProductDetail()"
+        />
     `;
 
-    static components = { ProductCard };
-
     static props = {
-        products: { type: Array },
-        showControls: { type: Boolean, optional: true },
-        onQuickView: { type: Function, optional: true },
-        onAddToCart: { type: Function, optional: true },
-        onToggleWishlist: { type: Function, optional: true },
-        onSortChange: { type: Function, optional: true }
+        products: Array,
+        viewMode: String,
+        onQuickView: Function,
+        onAddToCart: Function,
+        onAddToWishlist: Function
+    };
+
+    static components = {
+        ProductDetail
     };
 
     setup() {
-        this.state = {
-            viewMode: 'grid' // or 'list'
-        };
+        this.state = useState({
+            selectedProduct: null
+        });
     }
 
-    setViewMode(mode) {
-        this.state.viewMode = mode;
+    formatPrice(price) {
+        return productHelpers.formatPrice(price);
     }
 
-    onQuickView(product) {
-        if (this.props.onQuickView) {
-            this.props.onQuickView(product);
-        }
+    isNew(product) {
+        console.log(product);
+        // Consider product as new if it's less than 30 days old
+        // You might want to adjust this logic based on your needs
+        return true; // For demo purposes
     }
 
-    onAddToCart(product) {
-        if (this.props.onAddToCart) {
-            this.props.onAddToCart(product);
-        }
+    getStarClass(star, rating) {
+        return star <= rating ? 'fa fa-star' : 'far fa-star';
     }
 
-    onToggleWishlist(product) {
-        if (this.props.onToggleWishlist) {
-            this.props.onToggleWishlist(product);
-        }
+    showProductDetail(product) {
+        this.state.selectedProduct = product;
     }
 
-    onSortChange(event) {
-        if (this.props.onSortChange) {
-            this.props.onSortChange(event.target.value);
-        }
+    closeProductDetail() {
+        this.state.selectedProduct = null;
     }
 }

@@ -41,6 +41,7 @@ module.exports = {
             '@stores': path.resolve(__dirname, 'src/stores/'),
             '@data': path.resolve(__dirname, 'src/data/'),
             '@config': path.resolve(__dirname, 'src/config/'),
+            '@store': path.resolve(__dirname, 'src/store/'),
         },
         extensions: ['.xml', '.mjs', '.js', '.json', '.scss', '.png', '.jpg', '.jpeg', '.gif', '.svg']
     },
