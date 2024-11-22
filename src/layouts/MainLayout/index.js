@@ -3,11 +3,9 @@ import Header from "@layouts/Header";
 import Footer from "@layouts/Footer";
 import HomePage from "@pages/Home";
 import AboutPage from "@pages/About";
-import ContactPage from "@pages/Contact";
-import MarketTrendsPage from "@pages/MarketTrends";
-import PrivacyPage from "@pages/Privacy";
-import TermsPage from "@pages/Terms";
-import SitemapPage from "@pages/Sitemap";
+import ProductListPage from "@pages/shop/ProductList";
+import ProductDetailPage from "@pages/shop/ProductDetail";
+import CartPage from "@pages/shop/Cart";
 import { routeState } from "@services/router";
 import "./style.scss";
 
@@ -23,20 +21,14 @@ class MainLayout extends Component {
                     <t t-if="state.currentRoute === '/about'">
                         <AboutPage />
                     </t>
-                    <t t-if="state.currentRoute === '/contact'">
-                        <ContactPage />
+                    <t t-if="state.currentRoute === '/shop'">
+                        <ProductListPage />
                     </t>
-                    <t t-if="state.currentRoute === '/market-trends'">
-                        <MarketTrendsPage />
+                    <t t-if="state.currentRoute.startsWith('/shop/product/')">
+                        <ProductDetailPage productId="getProductId()" />
                     </t>
-                    <t t-if="state.currentRoute === '/privacy'">
-                        <PrivacyPage />
-                    </t>
-                    <t t-if="state.currentRoute === '/terms'">
-                        <TermsPage />
-                    </t>
-                    <t t-if="state.currentRoute === '/sitemap'">
-                        <SitemapPage />
+                    <t t-if="state.currentRoute === '/cart'">
+                        <CartPage />
                     </t>
                 </main>
                 <Footer />
@@ -44,16 +36,26 @@ class MainLayout extends Component {
         </t>
     `;
 
-    static components = { Header, Footer, HomePage, AboutPage, ContactPage, MarketTrendsPage, PrivacyPage, TermsPage, SitemapPage };
+    static components = { 
+        Header, 
+        Footer, 
+        HomePage, 
+        AboutPage, 
+        ProductListPage,
+        ProductDetailPage,
+        CartPage
+    };
 
     setup() {
         this.state = routeState;
-        
-        // Listen for route changes
-        window.addEventListener("route-changed", () => {
-            this.render();
-        });
+        window.addEventListener("route-changed", () => this.render());
     }
-}
+
+    getProductId() {
+        const match = this.state.currentRoute.match(/\/shop\/product\/(\d+)/);
+        return match ? parseInt(match[1]) : null;
+    }
+};
+
 
 export default MainLayout; 

@@ -1,0 +1,26 @@
+.shop-product-list {
+    padding: 2rem 0;
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .no-products {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 3rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .product-list-page {
+        .shop-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+}

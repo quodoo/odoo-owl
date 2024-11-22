@@ -1,0 +1,13 @@
+body {
+    font-family: $font-family-base;
+    background-color: $body-bg;
+    color: $text-color;
+    line-height: 1.5;
+}
+
+.container {
+    padding-right: $spacing-unit;
+    padding-left: $spacing-unit;
+    margin-right: auto;
+    margin-left: auto;
+} 

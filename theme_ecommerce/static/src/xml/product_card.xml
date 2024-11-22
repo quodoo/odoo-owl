@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="theme_ecommerce.ProductCard">
+        <div class="product-card" t-att-data-product-id="props.product.id">
+            <div class="product-image position-relative">
+                <img t-att-src="props.product.image_url" 
+                     t-att-alt="props.product.name"
+                     class="img-fluid"/>
+                <div class="product-actions">
+                    <button t-on-click="addToCart"
+                            t-att-class="{'added': state.isInCart}"
+                            class="btn btn-primary">
+                        <i t-if="!state.isInCart" class="fa fa-shopping-cart"/>
+                        <i t-else="" class="fa fa-check"/>
+                    </button>
+                    <button t-if="props.showQuickView" 
+                            t-on-click="() => this.state.showQuickView = true"
+                            class="btn btn-secondary">
+                        <i class="fa fa-eye"/>
+                    </button>
+                </div>
+            </div>
+            <div class="product-info p-3">
+                <h5 class="product-title" t-esc="props.product.name"/>
+                <div class="product-price">
+                    <span t-esc="props.product.currency"/>
+                    <span t-esc="props.product.price"/>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates> 

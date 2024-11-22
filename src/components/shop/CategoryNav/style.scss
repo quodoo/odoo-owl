@@ -1,0 +1,110 @@
+.category-nav {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+
+    .category-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+
+        .category-item {
+            padding: 0.75rem 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            background: white;
+            color: #495057;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+
+            i {
+                font-size: 1rem;
+            }
+
+            .item-count {
+                color: #6c757d;
+                font-size: 0.9rem;
+            }
+
+            &:hover {
+                border-color: #007bff;
+                color: #007bff;
+            }
+
+            &.active {
+                background: #007bff;
+                border-color: #007bff;
+                color: white;
+
+                .item-count {
+                    color: rgba(255,255,255,0.8);
+                }
+            }
+        }
+    }
+
+    .filter-section {
+        border-top: 1px solid #dee2e6;
+        padding-top: 1.5rem;
+
+        h4 {
+            margin: 0 0 1rem;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .price-filter {
+            margin-bottom: 1.5rem;
+
+            .price-inputs {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+
+                input {
+                    width: 100px;
+                    padding: 0.5rem;
+                    border: 1px solid #dee2e6;
+                    border-radius: 4px;
+                    
+                    &:focus {
+                        outline: none;
+                        border-color: #007bff;
+                    }
+                }
+            }
+        }
+
+        .stock-filter {
+            .checkbox-label {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                cursor: pointer;
+                color: #495057;
+
+                input[type="checkbox"] {
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .category-nav {
+        .category-list {
+            flex-direction: column;
+            
+            .category-item {
+                width: 100%;
+            }
+        }
+    }
+}

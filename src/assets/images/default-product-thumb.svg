@@ -1,0 +1,17 @@
+<svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background -->
+    <rect width="300" height="300" fill="#F8F9FA"/>
+    
+    <!-- Product Icon -->
+    <path d="M150 80C138.954 80 130 88.9543 130 100V140H170V100C170 88.9543 161.046 80 150 80Z" fill="#DEE2E6"/>
+    <rect x="90" y="140" width="120" height="80" rx="8" fill="#DEE2E6"/>
+    
+    <!-- Text -->
+    <text x="150" y="250" 
+          font-family="Arial, sans-serif" 
+          font-size="14" 
+          fill="#6C757D"
+          text-anchor="middle">
+        No Image
+    </text>
+</svg> 
