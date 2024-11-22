@@ -1,4 +1,5 @@
 import { Component, xml } from "@odoo/owl";
+import { cartService } from "@services/shop/cartService";
 import { productHelpers } from "@utils/helpers";
 import "./style.scss";
 
@@ -59,7 +60,7 @@ export class ShoppingCart extends Component {
                                 <!-- Remove Button -->
                                 <button 
                                     class="remove-btn"
-                                    t-on-click="() => this.props.onRemoveItem(item)">
+                                    t-on-click="() => this.removeItem(item)">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </div>
@@ -100,12 +101,12 @@ export class ShoppingCart extends Component {
     }
 
     getSubtotal() {
-        return this.props.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        return cartService.cart.total;
     }
 
     updateQuantity(item, newQuantity) {
         if (newQuantity >= 1) {
-            this.props.onUpdateQuantity(item, newQuantity);
+            cartService.updateQuantity(item.id, newQuantity);
         }
     }
 
@@ -115,6 +116,25 @@ export class ShoppingCart extends Component {
 
     isMaxQuantity(item) {
         return item.maxQuantity ? item.quantity >= item.maxQuantity : false;
+    }
+
+    removeItem(item) {
+        cartService.removeItem(item.id);
+    }
+
+    getShippingCost() {
+        const subtotal = this.getSubtotal();
+        return subtotal > 100 ? 0 : 10; // Free shipping over $100
+    }
+
+    getTotal() {
+        return this.getSubtotal() + this.getShippingCost();
+    }
+
+    onCheckout() {
+        if (this.props.onCheckout) {
+            this.props.onCheckout();
+        }
     }
 
     goToShop() {

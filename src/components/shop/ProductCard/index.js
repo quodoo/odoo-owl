@@ -2,6 +2,7 @@ import { Component, xml, useState } from "@odoo/owl";
 import { APP_SETTINGS } from "@config/settings";
 import { productHelpers } from "@utils/helpers";
 import "./style.scss";
+import { cartService } from "@services/shop/cartService";
 
 export class ProductCard extends Component {
     static template = xml`
@@ -136,7 +137,12 @@ export class ProductCard extends Component {
     addToCart(event) {
         event.stopPropagation();
         if (this.props.product.stock) {
-            this.props.onAddToCart(this.props.product);
+            cartService.addItem(this.props.product);
+            this.showSuccessMessage();
         }
+    }
+
+    showSuccessMessage() {
+        console.log('Product added to cart successfully');
     }
 } 

@@ -1,4 +1,4 @@
-import { Component, xml} from "@odoo/owl";
+import { Component, xml, useState } from "@odoo/owl";
 import { cartService } from "@services/shop/cartService";
 import { wishlistService } from "@services/shop/wishlistService";
 import { ShoppingCart } from "@components/shop/ShoppingCart";
@@ -136,31 +136,31 @@ export default class Header extends Component {
     static components = { ShoppingCart, WishList };
 
     setup() {
-        this.state = {
+        this.state = useState({
             ...routeState,
             logo: logo,
             isCartOpen: false,
             isWishlistOpen: false,
             currency: 'USD'
-        };
+        });
 
         this.cartService = cartService;
         this.wishlistService = wishlistService;
 
         // Listen for route changes
-        window.addEventListener("route-changed", () => this.render());
+        window.addEventListener("route-changed", () => {
+            this.render();
+        });
     }
 
     get cartCount() {
-        return this.cartService.cart.items.reduce(
+        return cartService.cart.items.reduce(
             (sum, item) => sum + item.quantity, 0
         );
     }
 
     get cartTotal() {
-        return this.cartService.cart.items.reduce(
-            (sum, item) => sum + (item.price * item.quantity), 0
-        );
+        return cartService.cart.total;
     }
 
     get wishlistCount() {
@@ -203,6 +203,7 @@ export default class Header extends Component {
         if (this.state.isCartOpen) {
             this.state.isWishlistOpen = false;
         }
+        this.render();
     }
 
     toggleWishlist() {
@@ -210,6 +211,7 @@ export default class Header extends Component {
         if (this.state.isWishlistOpen) {
             this.state.isCartOpen = false;
         }
+        this.render();
     }
 
     updateCartQuantity(item, quantity) {
@@ -236,6 +238,7 @@ export default class Header extends Component {
 
     onCheckout() {
         this.state.isCartOpen = false;
+        this.render();
         router.navigate(APP_URLS.CART);
     }
 }
