@@ -39,6 +39,8 @@ module.exports = {
             '@services': path.resolve(__dirname, 'src/services/'),
             '@utils': path.resolve(__dirname, 'src/utils/'),
             '@stores': path.resolve(__dirname, 'src/stores/'),
+            '@data': path.resolve(__dirname, 'src/data/'),
+            '@config': path.resolve(__dirname, 'src/config/'),
         },
         extensions: ['.xml', '.mjs', '.js', '.json', '.scss', '.png', '.jpg', '.jpeg', '.gif', '.svg']
     },

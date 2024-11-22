@@ -1,5 +1,5 @@
 import { Component, xml } from "@odoo/owl";
-import { formatPrice, MOCK_DATA } from "@data/mockData";
+import { APP_SETTINGS, formatHelpers } from "@config/settings";
 import "./style.scss";
 
 export class ProductCard extends Component {
@@ -8,7 +8,7 @@ export class ProductCard extends Component {
             <div class="product-image">
                 <img t-att-src="getProductImage()" 
                      t-att-alt="props.product.name"
-                     onError="this.onerror=null; this.src='${MOCK_DATA.settings.defaultImages.productThumb}'"/>
+                     onError="this.onerror=null; this.src='${APP_SETTINGS.defaultImages.productThumb}'"/>
                 <div class="product-actions">
                     <button class="btn-wishlist" t-on-click.prevent="toggleWishlist">
                         <i class="fa fa-heart"/>
@@ -31,13 +31,13 @@ export class ProductCard extends Component {
     };
 
     setup() {
-        this.formatPrice = formatPrice;
+        this.formatPrice = formatHelpers.formatPrice;
     }
 
     getProductImage() {
         return this.props.product.thumbImage || 
                this.props.product.image || 
-               MOCK_DATA.settings.defaultImages.productThumb;
+               APP_SETTINGS.defaultImages.productThumb;
     }
 
     toggleWishlist() {

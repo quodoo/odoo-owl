@@ -1,31 +1,50 @@
 import { Component, xml } from "@odoo/owl";
+import { HeroBanner } from "./components/HeroBanner";
+import { CategorySection } from "./components/CategorySection";
+import { FeaturedProducts } from "./components/FeaturedProducts";
+import { BrandSection } from "./components/BrandSection";
 import "./style.scss";
-import MarketChart from "@components/MarketChart/MarketChart";
 
-class HeroSection extends Component {}
-HeroSection.template = xml`
-    <div class="hero-section">
-        <h1 class="rainbow-text">
-            <div class="rainbow-text-item">
-                Welcome to My Odoo OWL Project
-            </div>
-        </h1>
-        <p class="subtitle">A modern web application built with Odoo OWL Framework</p>
-    </div>
-`;
-
-class HomePage extends Component {
+export default class HomePage extends Component {
     static template = xml`
         <div class="home-page">
-            <HeroSection/>
-            <MarketChart/>
+            <!-- Hero Banner Section -->
+            <HeroBanner />
+            
+            <!-- Popular Categories -->
+            <section class="popular-categories">
+                <div class="container">
+                    <h2 class="section-title">Popular Categories</h2>
+                    <p class="section-subtitle">We add new products every day. Explore our great range of products.</p>
+                    <CategorySection />
+                </div>
+            </section>
+
+            <!-- Best Offers -->
+            <section class="best-offers">
+                <div class="container">
+                    <h2 class="section-title">Best Offers For You</h2>
+                    <p class="section-subtitle">Hurry and get huge discounts.</p>
+                    <div class="offers-grid">
+                        <FeaturedProducts />
+                    </div>
+                </div>
+            </section>
+
+            <!-- Brands Section -->
+            <section class="brands-section">
+                <div class="container">
+                    <h2 class="section-title">Top Brands</h2>
+                    <BrandSection />
+                </div>
+            </section>
         </div>
     `;
 
-    static components = {
-        HeroSection,
-        MarketChart,
+    static components = { 
+        HeroBanner,
+        CategorySection,
+        FeaturedProducts,
+        BrandSection
     };
 }
-
-export default HomePage;
