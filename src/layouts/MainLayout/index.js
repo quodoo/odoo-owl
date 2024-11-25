@@ -6,7 +6,7 @@ import AboutPage from "@pages/About";
 import ShopPage from "@pages/shop";
 import ProductListPage from "@pages/shop/ProductList";
 import ProductDetailPage from "@src/components/shop/ProductDetail";
-import CartPage from "@pages/shop/Cart";
+import Toast from "@components/Toast";
 import { routeState } from "@services/router";
 import "./style.scss";
 
@@ -28,9 +28,6 @@ class MainLayout extends Component {
                     <t t-if="state.currentRoute.startsWith('/shop/product/')">
                         <ProductDetailPage productId="getProductId()" />
                     </t>
-                    <t t-if="state.currentRoute === '/cart'">
-                        <CartPage />
-                    </t>
                 </main>
                 <Footer />
             </div>
@@ -45,7 +42,7 @@ class MainLayout extends Component {
         ShopPage,
         ProductListPage,
         ProductDetailPage,
-        CartPage
+        Toast,
     };
 
     setup() {

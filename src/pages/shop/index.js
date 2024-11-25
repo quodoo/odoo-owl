@@ -1,10 +1,11 @@
-import { Component, xml } from "@odoo/owl";
+import { Component, xml, useState, onMounted } from "@odoo/owl";
 import { ProductGrid } from "@components/shop/ProductGrid";
 import { CategoryNav } from "@components/shop/CategoryNav";
 import { FilterSidebar } from "@components/shop/FilterSidebar";
 import { shopStore } from "@store/shop";
 import LoadingIndicator from "@components/LoadingIndicator";
 import { PRODUCTS } from "@data/products";
+import { CATEGORIES } from "@data/categories";
 
 import "./style.scss";
 
@@ -115,13 +116,15 @@ export default class ShopPage extends Component {
     };
 
     setup() {
-        this.state = {
+        this.state = useState({
             loading: true,
             error: null,
             products: [],
             filteredProducts: [],
-            categories: [],
-            selectedCategory: 'all',
+            categories: [
+                { id: 'all', name: 'All Products', count: 0 }
+            ],
+            selectedCategories: [],
             viewMode: 'grid',
             sortBy: 'featured',
             filters: {
@@ -143,9 +146,114 @@ export default class ShopPage extends Component {
                 max: 1000,
                 current: { min: 0, max: 1000 }
             }
+        });
+
+        this.initializeData();
+        this.setupUrlListener();
+
+        onMounted(() => {
+            this.checkUrlParams();
+        });
+
+        // Thêm event listener cho categoryChanged
+        window.addEventListener('categoryChanged', (event) => {
+            const category = event.detail.category;
+            if (category) {
+                this.state.selectedCategories = [category];
+                this.filterProducts();
+            }
+        });
+
+        // Khởi tạo dữ liệu ngay lập tức
+        this.initializeData();
+        
+        // Check URL params sau khi khởi tạo dữ liệu
+        this.checkUrlParams();
+    }
+
+    setupUrlListener() {
+        window.addEventListener('popstate', () => {
+            this.checkUrlParams();
+        });
+    }
+
+    initializeData() {
+        this.state.products = PRODUCTS;
+        
+        this.state.categories = [
+            { 
+                id: 'all', 
+                name: 'All Products', 
+                count: PRODUCTS.length 
+            },
+            ...CATEGORIES.map(cat => ({
+                id: cat.id,
+                name: cat.name,
+                count: PRODUCTS.filter(p => p.category === cat.id).length
+            }))
+        ];
+
+        const brands = [...new Set(PRODUCTS.map(p => p.brand).filter(Boolean))];
+        
+        const colors = [...new Set(PRODUCTS.map(p => p.color).filter(Boolean))];
+        
+        const sizes = [...new Set(PRODUCTS.map(p => p.size).filter(Boolean))];
+
+        const prices = PRODUCTS.map(p => p.price);
+        this.state.priceRange = {
+            min: Math.floor(Math.min(...prices)),
+            max: Math.ceil(Math.max(...prices)),
+            current: {
+                min: Math.floor(Math.min(...prices)),
+                max: Math.ceil(Math.max(...prices))
+            }
         };
 
-        this.loadInitialData();
+        this.state.filters = {
+            brands,
+            colors,
+            sizes,
+            ratings: [5, 4, 3, 2, 1],
+            availability: true
+        };
+
+        this.filterProducts();
+        
+        this.state.loading = false;
+    }
+
+    checkUrlParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoryParam = urlParams.get('category');
+
+        if (categoryParam) {
+            this.state.selectedCategories = [categoryParam];
+            this.filterProducts();
+        }
+    }
+
+    onCategoryChange(category) {
+        let newCategories = [...this.state.selectedCategories];
+        const index = newCategories.indexOf(category);
+        
+        if (category === 'all') {
+            newCategories = [];
+        } else if (index === -1) {
+            newCategories.push(category);
+        } else {
+            newCategories.splice(index, 1);
+        }
+
+        this.state.selectedCategories = newCategories;
+
+        if (newCategories.length > 0) {
+            const queryString = `categories=${newCategories.join(',')}`;
+            history.pushState(null, '', `/shop?${queryString}`);
+        } else {
+            history.pushState(null, '', '/shop');
+        }
+        
+        this.filterProducts();
     }
 
     // New methods for filter handling
@@ -228,55 +336,6 @@ export default class ShopPage extends Component {
         this.filterProducts();
     }
 
-    async loadInitialData() {
-        try {
-            this.state.loading = true;
-            
-            this.state.products = PRODUCTS;
-            
-            const uniqueCategories = [...new Set(PRODUCTS.map(p => p.category))];
-            this.state.categories = uniqueCategories.map(cat => ({
-                id: cat,
-                name: cat.split('-').map(word => 
-                    word.charAt(0).toUpperCase() + word.slice(1)
-                ).join(' '),
-                count: PRODUCTS.filter(p => p.category === cat).length
-            }));
-
-            const uniqueBrands = [...new Set(PRODUCTS.map(p => p.brand).filter(Boolean))];
-            
-            this.state.filters = {
-                brands: uniqueBrands,
-                colors: [],
-                sizes: [],
-                ratings: [5, 4, 3, 2, 1],
-                availability: true
-            };
-
-            const prices = PRODUCTS.map(p => p.price);
-            this.state.priceRange = {
-                min: Math.floor(Math.min(...prices)),
-                max: Math.ceil(Math.max(...prices)),
-                current: {
-                    min: Math.floor(Math.min(...prices)),
-                    max: Math.ceil(Math.max(...prices))
-                }
-            };
-
-            this.filterProducts();
-            
-        } catch (error) {
-            this.state.error = "Error loading products: " + error.message;
-        } finally {
-            this.state.loading = false;
-        }
-    }
-
-    onCategoryChange(category) {
-        this.state.selectedCategory = category;
-        this.filterProducts();
-    }
-
     onSortChange(event) {
         this.state.sortBy = event.target.value;
         this.filterProducts();
@@ -286,13 +345,23 @@ export default class ShopPage extends Component {
         this.state.viewMode = mode;
     }
 
+    onFilterChange(filters) {
+        this.state.selectedFilters = filters;
+        this.filterProducts();
+    }
+
+    onPriceRangeChange(range) {
+        this.state.priceRange.current = range;
+        this.filterProducts();
+    }
+
     filterProducts() {
         let filtered = [...this.state.products];
-        const { selectedFilters, priceRange, selectedCategory } = this.state;
+        const { selectedCategories, selectedFilters, priceRange } = this.state;
         
-        // Category filter
-        if (selectedCategory !== 'all') {
-            filtered = filtered.filter(p => p.category === selectedCategory);
+        // Category filter - hỗ trợ nhiều categories
+        if (selectedCategories.length > 0) {
+            filtered = filtered.filter(p => selectedCategories.includes(p.category));
         }
 
         // Price range filter
@@ -304,6 +373,16 @@ export default class ShopPage extends Component {
         // Brand filter
         if (selectedFilters.brands.length) {
             filtered = filtered.filter(p => selectedFilters.brands.includes(p.brand));
+        }
+
+        // Color filter
+        if (selectedFilters.colors.length) {
+            filtered = filtered.filter(p => p.color && selectedFilters.colors.includes(p.color));
+        }
+
+        // Size filter
+        if (selectedFilters.sizes.length) {
+            filtered = filtered.filter(p => p.size && selectedFilters.sizes.includes(p.size));
         }
 
         // Rating filter
@@ -330,14 +409,35 @@ export default class ShopPage extends Component {
                 filtered.sort((a, b) => b.id - a.id);
                 break;
             case 'popularity':
-                filtered.sort((a, b) => b.rating - a.rating);
+                filtered.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
                 break;
             case 'rating':
-                filtered.sort((a, b) => b.rating - a.rating);
+                filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
                 break;
+            default: // 'featured'
+                filtered.sort((a, b) => (b.isBestOffer ? 1 : 0) - (a.isBestOffer ? 1 : 0));
         }
 
         this.state.filteredProducts = filtered;
+
+        // Cập nhật số lượng sản phẩm cho mỗi category
+        this.updateCategoryCounts(filtered);
+    }
+
+    // Thêm phương thức để cập nhật số lượng sản phẩm cho mỗi category
+    updateCategoryCounts(filteredProducts) {
+        const categoryCounts = {};
+        
+        // Đếm số lượng sản phẩm cho mỗi category trong danh sách đã lọc
+        filteredProducts.forEach(product => {
+            categoryCounts[product.category] = (categoryCounts[product.category] || 0) + 1;
+        });
+
+        // Cập nhật count cho mỗi category
+        this.state.categories = this.state.categories.map(cat => ({
+            ...cat,
+            count: cat.id === 'all' ? filteredProducts.length : (categoryCounts[cat.id] || 0)
+        }));
     }
 
     showQuickView(product) {

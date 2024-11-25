@@ -37,7 +37,7 @@ export class ProductQuickView extends Component {
                             <div class="product-actions">
                                 <div class="quantity-selector">
                                     <button t-on-click="decrementQuantity" 
-                                            t-att-disabled="state.quantity <= 1">
+                                            t-att-disabled="state.quantity &lt;= 1">
                                         <i class="fa fa-minus"></i>
                                     </button>
                                     <input type="number" 

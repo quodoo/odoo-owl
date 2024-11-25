@@ -11,7 +11,7 @@ export class ShoppingCart extends Component {
             <div class="cart-content">
                 <!-- Header -->
                 <div class="cart-header">
-                    <h3>Shopping Cart (<t t-esc="props.items.length"/> items)</h3>
+                    <h3>Shopping Cart (<t t-esc="cartService.cart.items.length"/> items)</h3>
                     <button class="close-btn" t-on-click="props.onClose">
                         <i class="fa fa-times"></i>
                     </button>
@@ -19,7 +19,7 @@ export class ShoppingCart extends Component {
 
                 <!-- Cart Items -->
                 <div class="cart-items">
-                    <t t-if="props.items.length === 0">
+                    <t t-if="cartService.cart.items.length === 0">
                         <div class="empty-cart">
                             <i class="fa fa-shopping-cart"></i>
                             <p>Your cart is empty</p>
@@ -27,40 +27,32 @@ export class ShoppingCart extends Component {
                         </div>
                     </t>
                     <t t-else="">
-                        <t t-foreach="props.items" t-as="item" t-key="item.id">
+                        <t t-foreach="cartService.cart.items" t-as="item" t-key="item.id">
                             <div class="cart-item">
-                                <!-- Product Image -->
                                 <div class="item-image">
                                     <img t-att-src="item.image" t-att-alt="item.name"/>
                                 </div>
-                                
-                                <!-- Product Info -->
                                 <div class="item-info">
                                     <h4 class="item-name" t-esc="item.name"/>
                                     <div class="item-price" t-esc="formatPrice(item.price)"/>
-                                    
-                                    <!-- Quantity Controls -->
                                     <div class="quantity-controls">
                                         <button 
                                             class="qty-btn" 
                                             t-on-click="() => this.updateQuantity(item, item.quantity - 1)"
-                                            t-att-disabled="isMinQuantity(item)">
+                                            t-att-disabled="item.quantity &lt;= 1">
                                             <i class="fa fa-minus"></i>
                                         </button>
                                         <span class="quantity" t-esc="item.quantity"/>
                                         <button 
                                             class="qty-btn"
-                                            t-on-click="() => this.updateQuantity(item, item.quantity + 1)"
-                                            t-att-disabled="isMaxQuantity(item)">
+                                            t-on-click="() => this.updateQuantity(item, item.quantity + 1)">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
-
-                                <!-- Remove Button -->
                                 <button 
                                     class="remove-btn"
-                                    t-on-click="() => this.removeItem(item)">
+                                    t-on-click="() => this.removeFromCart(item)">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </div>
@@ -69,17 +61,17 @@ export class ShoppingCart extends Component {
                 </div>
 
                 <!-- Cart Footer -->
-                <div t-if="props.items.length > 0" class="cart-footer">
+                <div t-if="cartService.cart.items.length > 0" class="cart-footer">
                     <div class="cart-summary">
                         <div class="subtotal">
                             <span>Subtotal:</span>
-                            <span t-esc="formatPrice(getSubtotal())"/>
+                            <span t-esc="formatPrice(cartService.cart.total)"/>
                         </div>
                         <p class="tax-note">Taxes and shipping calculated at checkout</p>
                     </div>
                     <button 
                         class="checkout-btn"
-                        t-on-click="props.onCheckout">
+                        t-on-click="onCheckout">
                         Proceed to Checkout
                     </button>
                 </div>
@@ -87,48 +79,24 @@ export class ShoppingCart extends Component {
         </div>
     `;
 
-    static props = {
-        isOpen: { type: Boolean },
-        items: { type: Array },
-        onClose: { type: Function },
-        onUpdateQuantity: { type: Function },
-        onRemoveItem: { type: Function },
-        onCheckout: { type: Function }
-    };
+    setup() {
+        this.cartService = cartService;
+    }
 
     formatPrice(price) {
         return productHelpers.formatPrice(price);
     }
 
-    getSubtotal() {
-        return cartService.cart.total;
-    }
-
     updateQuantity(item, newQuantity) {
         if (newQuantity >= 1) {
-            cartService.updateQuantity(item.id, newQuantity);
+            this.cartService.updateQuantity(item.id, newQuantity);
+            this.render();
         }
     }
 
-    isMinQuantity(item) {
-        return item.quantity <= 1;
-    }
-
-    isMaxQuantity(item) {
-        return item.maxQuantity ? item.quantity >= item.maxQuantity : false;
-    }
-
-    removeItem(item) {
-        cartService.removeItem(item.id);
-    }
-
-    getShippingCost() {
-        const subtotal = this.getSubtotal();
-        return subtotal > 100 ? 0 : 10; // Free shipping over $100
-    }
-
-    getTotal() {
-        return this.getSubtotal() + this.getShippingCost();
+    removeFromCart(item) {
+        this.cartService.removeItem(item.id);
+        this.render();
     }
 
     onCheckout() {
@@ -141,4 +109,4 @@ export class ShoppingCart extends Component {
         this.props.onClose();
         window.location.href = '/shop';
     }
-} 
+}

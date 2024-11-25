@@ -1,80 +1,159 @@
 import { reactive } from "@odoo/owl";
+import { toastService } from "@services/toastService";
+
+const CART_STORAGE_KEY = 'shopping_cart';
 
 class CartService {
     constructor() {
         this.cart = reactive({
             items: [],
-            total: 0
+            total: 0,
+            isOpen: false,
+            isProcessing: false
         });
+        this.initializeCart();
     }
 
-    addItem(product, quantity = 1) {
-        const existingItem = this.cart.items.find(item => item.id === product.id);
-        
-        if (existingItem) {
-            // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng
-            existingItem.quantity += quantity;
-        } else {
-            // Nếu là sản phẩm mới, thêm vào giỏ hàng
-            this.cart.items.push({
-                ...product,
-                quantity: quantity
-            });
+    initializeCart() {
+        try {
+            const savedCart = localStorage.getItem(CART_STORAGE_KEY);
+            if (savedCart) {
+                const parsedCart = JSON.parse(savedCart);
+                this.cart.items = parsedCart.items || [];
+                this.cart.total = parsedCart.total || 0;
+                console.log('Cart initialized from localStorage:', this.cart);
+            }
+        } catch (error) {
+            console.error('Error initializing cart:', error);
+            this.resetCart();
+        }
+    }
+
+    async addItem(product, quantity = 1) {
+        if (this.cart.isProcessing) {
+            return;
         }
 
-        this.updateTotal();
-        this.saveCart();
+        try {
+            this.cart.isProcessing = true;
+
+            if (!product || !product.id) {
+                throw new Error('Invalid product data');
+            }
+
+            const currentItems = [...this.cart.items];
+            const existingItemIndex = currentItems.findIndex(item => item.id === product.id);
+
+            if (existingItemIndex !== -1) {
+                currentItems[existingItemIndex] = {
+                    ...currentItems[existingItemIndex],
+                    quantity: currentItems[existingItemIndex].quantity + quantity
+                };
+            } else {
+                currentItems.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: quantity,
+                    stock: product.stock,
+                    discount: product.discount
+                });
+            }
+
+            this.cart.items = currentItems;
+
+            await this.updateTotal();
+            await this.persistCart();
+
+            toastService.show(`${product.name} added to cart`, 'success');
+            console.log('Cart updated:', this.cart);
+
+        } catch (error) {
+            console.error('Error adding item to cart:', error);
+            toastService.show('Failed to add item to cart', 'error');
+            throw error;
+        } finally {
+            this.cart.isProcessing = false;
+        }
     }
 
     removeItem(productId) {
-        this.cart.items = this.cart.items.filter(item => item.id !== productId);
-        this.updateTotal();
-        this.saveCart();
-    }
-
-    updateQuantity(productId, quantity) {
-        const item = this.cart.items.find(item => item.id === productId);
-        if (item) {
-            if (quantity <= 0) {
-                this.removeItem(productId);
-            } else {
-                item.quantity = quantity;
+        try {
+            const itemToRemove = this.cart.items.find(item => item.id === productId);
+            if (itemToRemove) {
+                this.cart.items = this.cart.items.filter(item => item.id !== productId);
                 this.updateTotal();
-                this.saveCart();
+                this.persistCart();
+                toastService.show(`${itemToRemove.name} removed from cart`, 'info');
             }
+        } catch (error) {
+            console.error('Error removing item:', error);
+            toastService.show('Failed to remove item', 'error');
         }
     }
 
-    clearCart() {
-        this.cart.items = [];
-        this.cart.total = 0;
-        this.saveCart();
+    updateQuantity(productId, quantity) {
+        try {
+            if (quantity <= 0) {
+                this.removeItem(productId);
+                return;
+            }
+
+            const updatedItems = this.cart.items.map(item =>
+                item.id === productId ? { ...item, quantity } : item
+            );
+
+            this.cart.items = updatedItems;
+            this.updateTotal();
+            this.persistCart();
+        } catch (error) {
+            console.error('Error updating quantity:', error);
+            toastService.show('Failed to update quantity', 'error');
+        }
     }
 
     updateTotal() {
         this.cart.total = this.cart.items.reduce((sum, item) => {
             const price = item.price * (1 - (item.discount || 0) / 100);
-            return sum + price * item.quantity;
+            return sum + (price * item.quantity);
         }, 0);
     }
 
-    // Lưu giỏ hàng vào localStorage
-    saveCart() {
-        localStorage.setItem('cart', JSON.stringify(this.cart));
+    async persistCart() {
+        try {
+            const cartData = {
+                items: this.cart.items,
+                total: this.cart.total
+            };
+            localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartData));
+            console.log('Cart saved to localStorage:', cartData);
+        } catch (error) {
+            console.error('Error saving cart:', error);
+            toastService.show('Error saving cart data', 'error');
+            throw error;
+        }
     }
 
-    // Khôi phục giỏ hàng từ localStorage
-    loadCart() {
-        const savedCart = localStorage.getItem('cart');
-        if (savedCart) {
-            const parsedCart = JSON.parse(savedCart);
-            this.cart.items = parsedCart.items;
-            this.cart.total = parsedCart.total;
-        }
+    resetCart() {
+        this.cart.items = [];
+        this.cart.total = 0;
+        localStorage.removeItem(CART_STORAGE_KEY);
+    }
+
+    clearCart() {
+        this.resetCart();
+        toastService.show('Cart cleared', 'info');
+    }
+
+    getCartItemCount() {
+        return this.cart.items.reduce((total, item) => total + item.quantity, 0);
+    }
+
+    toggleCart() {
+        this.cart.isOpen = !this.cart.isOpen;
     }
 }
 
 export const cartService = new CartService();
-
-// Khôi phục giỏ hàng khi khởi động ứng dụng
-cartService.loadCart();
+console.log('CartService initialized with state:', cartService.cart);

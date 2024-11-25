@@ -4,6 +4,7 @@ import { wishlistService } from "@services/shop/wishlistService";
 import { ShoppingCart } from "@components/shop/ShoppingCart";
 import { WishList } from "@components/shop";
 import { router, routeState } from "@services/router";
+import { CATEGORIES } from "@data/categories";
 import logo from "@assets/images/logo.png";
 import "./style.scss";
 import { APP_URLS } from '../../config/urls';
@@ -83,10 +84,30 @@ export default class Header extends Component {
 
                     <!-- Navigation -->
                     <nav class="main-nav">
-                        <button class="categories-btn">
-                            <i class="fa fa-bars"></i>
-                            Categories
-                        </button>
+                        <div class="categories-menu">
+                            <button class="categories-btn" t-on-click="toggleCategories">
+                                <i class="fa fa-bars"></i>
+                                Categories
+                            </button>
+                            
+                            <!-- Categories Dropdown -->
+                            <div class="categories-dropdown" t-att-class="{ 'show': state.isCategoriesOpen }">
+                                <div class="categories-list">
+                                    <t t-foreach="categories" t-as="category" t-key="category.id">
+                                        <div class="category-item" 
+                                             t-on-click="() => this.selectCategory(category)">
+                                            <div class="category-icon">
+                                                <img t-att-src="category.icon" t-att-alt="category.name"/>
+                                            </div>
+                                            <div class="category-info">
+                                                <span class="category-name" t-esc="category.name"/>
+                                                <span class="item-count" t-esc="'(' + category.productCount + ')'"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
                         
                         <div class="nav-links">
                             <a t-att-class="{ active: state.currentRoute === '/' }"
@@ -141,7 +162,9 @@ export default class Header extends Component {
             logo: logo,
             isCartOpen: false,
             isWishlistOpen: false,
-            currency: 'USD'
+            isCategoriesOpen: false,
+            currency: 'USD',
+            currentCategory: null
         });
 
         this.cartService = cartService;
@@ -154,9 +177,7 @@ export default class Header extends Component {
     }
 
     get cartCount() {
-        return cartService.cart.items.reduce(
-            (sum, item) => sum + item.quantity, 0
-        );
+        return 0; //this.cartService.getCartItemCount();
     }
 
     get cartTotal() {
@@ -240,5 +261,36 @@ export default class Header extends Component {
         this.state.isCartOpen = false;
         this.render();
         router.navigate(APP_URLS.CART);
+    }
+
+    // Sử dụng CATEGORIES từ data file
+    get categories() {
+        // Lấy các category phổ biến và thêm thông tin selected
+        return CATEGORIES.filter(cat => cat.isPopular).map(cat => ({
+            ...cat,
+            isSelected: this.state.currentCategory === cat.id
+        }));
+    }
+
+    selectCategory(category) {
+        this.state.isCategoriesOpen = false;
+        this.state.currentCategory = category.id;
+
+        // Sử dụng history.pushState thay vì router.navigate
+        const url = `/shop?category=${category.id}`;
+        history.pushState({ category: category.id }, '', url);
+
+        // Dispatch một custom event để ShopPage có thể lắng nghe
+        window.dispatchEvent(new CustomEvent('categoryChanged', {
+            detail: { category: category.id }
+        }));
+    }
+
+    toggleCategories() {
+        this.state.isCategoriesOpen = !this.state.isCategoriesOpen;
+        if (this.state.isCategoriesOpen) {
+            this.state.isCartOpen = false;
+            this.state.isWishlistOpen = false;
+        }
     }
 }
