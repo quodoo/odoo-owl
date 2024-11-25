@@ -1,8 +1,7 @@
-import { Component, xml, useState } from "@odoo/owl";
-// import { APP_SETTINGS } from "@config/settings";
-// import { productHelpers } from "@utils/helpers";
+import { Component, xml, onMounted, onWillUnmount, useState } from "@odoo/owl";
 import { cartService } from "@services/shop/cartService";
 import { toastService } from "@services/toastService";
+import { productHelpers } from "@utils/helpers";
 import "./style.scss";
 
 export class ProductCard extends Component {
@@ -30,10 +29,8 @@ export class ProductCard extends Component {
             <div class="product-info">
                 <h3 class="product-name" t-esc="props.product.name"/>
                 <div class="product-price">
-                    <span class="current-price">$<t t-esc="props.product.price.toFixed(2)"/></span>
-                    <span t-if="props.product.oldPrice" class="old-price">
-                        $<t t-esc="props.product.oldPrice.toFixed(2)"/>
-                    </span>
+                    <span class="current-price" t-esc="formatPrice(props.product.price)"/>
+                    <span t-if="props.product.list_price &amp;&amp; props.product.discount" class="old-price" t-esc="formatPrice(props.product.list_price)"/>
                 </div>
             </div>
         </div>
@@ -45,11 +42,28 @@ export class ProductCard extends Component {
     };
 
     setup() {
+        this.productHelpers = productHelpers;
+
         this.state = useState({
             isInWishlist: false,
             isAddingToCart: false
         });
+
+
+        onMounted(() => {
+            this.onCartUpdated = () => this.render();
+            cartService.on("update", this.onCartUpdated);
+        });
+
+        onWillUnmount(() => {
+            cartService.off("update", this.onCartUpdated);
+        });
     }
+
+    formatPrice(price) {
+        return this.productHelpers.formatPrice(price);
+    }
+
 
     getProductImage() {
         return this.props.product.thumbImage || 

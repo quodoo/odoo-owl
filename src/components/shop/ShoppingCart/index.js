@@ -1,4 +1,4 @@
-import { Component, xml } from "@odoo/owl";
+import { Component, xml, onMounted, onWillUnmount } from "@odoo/owl";
 import { cartService } from "@services/shop/cartService";
 import { productHelpers } from "@utils/helpers";
 import "./style.scss";
@@ -81,22 +81,31 @@ export class ShoppingCart extends Component {
 
     setup() {
         this.cartService = cartService;
+        this.productHelpers = productHelpers;
+
+        onMounted(() => {
+            this.render(); // Initial render
+            this.cartService.on('update', this.render.bind(this)); // Re-render on cart update
+        });
+
+        onWillUnmount(() => {
+            this.cartService.off('update', this.render.bind(this));
+        });
+
     }
 
     formatPrice(price) {
-        return productHelpers.formatPrice(price);
+        return this.productHelpers.formatPrice(price);
     }
 
     updateQuantity(item, newQuantity) {
         if (newQuantity >= 1) {
             this.cartService.updateQuantity(item.id, newQuantity);
-            this.render();
         }
     }
 
     removeFromCart(item) {
         this.cartService.removeItem(item.id);
-        this.render();
     }
 
     onCheckout() {

@@ -11,7 +11,31 @@ class CartService {
             isOpen: false,
             isProcessing: false
         });
+
+        this._listeners = {}; // Add event listeners
+
         this.initializeCart();
+    }
+
+
+    // Add event emitter methods
+    on(event, callback) {
+        if (!this._listeners[event]) {
+            this._listeners[event] = [];
+        }
+        this._listeners[event].push(callback);
+    }
+
+    off(event, callback) {
+        if (this._listeners[event]) {
+            this._listeners[event] = this._listeners[event].filter(cb => cb !== callback);
+        }
+    }
+
+    trigger(event, ...args) {
+        if (this._listeners[event]) {
+            this._listeners[event].forEach(callback => callback(...args));
+        }
     }
 
     initializeCart() {
@@ -51,13 +75,8 @@ class CartService {
                 };
             } else {
                 currentItems.push({
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    image: product.image,
-                    quantity: quantity,
-                    stock: product.stock,
-                    discount: product.discount
+                    ...product,
+                    quantity: quantity
                 });
             }
 
@@ -67,7 +86,7 @@ class CartService {
             await this.persistCart();
 
             toastService.show(`${product.name} added to cart`, 'success');
-            console.log('Cart updated:', this.cart);
+            this.trigger('update'); // Trigger 'update' event
 
         } catch (error) {
             console.error('Error adding item to cart:', error);
@@ -86,6 +105,7 @@ class CartService {
                 this.updateTotal();
                 this.persistCart();
                 toastService.show(`${itemToRemove.name} removed from cart`, 'info');
+                this.trigger('update'); // Trigger 'update' event
             }
         } catch (error) {
             console.error('Error removing item:', error);
@@ -107,6 +127,7 @@ class CartService {
             this.cart.items = updatedItems;
             this.updateTotal();
             this.persistCart();
+            this.trigger('update'); // Trigger 'update' event
         } catch (error) {
             console.error('Error updating quantity:', error);
             toastService.show('Failed to update quantity', 'error');
@@ -126,6 +147,7 @@ class CartService {
                 items: this.cart.items,
                 total: this.cart.total
             };
+
             localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartData));
             console.log('Cart saved to localStorage:', cartData);
         } catch (error) {
