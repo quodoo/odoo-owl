@@ -4,6 +4,8 @@ import Footer from "@layouts/Footer";
 import HomePage from "@pages/Home";
 import AboutPage from "@pages/About";
 import ShopPage from "@pages/shop";
+import ContactPage from "@pages/Contact";
+import ChatPage from "@pages/ChatPage";
 import ProductListPage from "@pages/shop/ProductList";
 import ProductDetailPage from "@src/components/shop/ProductDetail";
 import Toast from "@components/Toast";
@@ -25,6 +27,12 @@ class MainLayout extends Component {
                     <t t-if="state.currentRoute === '/shop'">
                         <ShopPage />
                     </t>
+                    <t t-if="state.currentRoute === '/contact'">
+                        <ContactPage />
+                    </t>
+                    <t t-if="state.currentRoute === '/chat'">
+                        <ChatPage />
+                    </t>
                     <t t-if="state.currentRoute.startsWith('/shop/product/')">
                         <ProductDetailPage productId="getProductId()" />
                     </t>
@@ -40,8 +48,10 @@ class MainLayout extends Component {
         HomePage, 
         AboutPage, 
         ShopPage,
+        ContactPage,
         ProductListPage,
         ProductDetailPage,
+        ChatPage,
         Toast,
     };
 

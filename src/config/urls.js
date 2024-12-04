@@ -32,4 +32,6 @@ export const APP_URLS = {
   WISHLIST: '/wishlist',
   CHECKOUT: '/checkout',
   ACCOUNT: '/account',
+  CHAT: '/chat',
+  CONTACT: '/contact',
 }; 

@@ -134,6 +134,7 @@ export default class Header extends Component {
                             </a>
                             <a href="/contact">Contact us</a>
                             <a href="/deals">Top Deals</a>
+                            <a href="/chat">Chat</a>
                         </div>
                     </nav>
                 </div>
