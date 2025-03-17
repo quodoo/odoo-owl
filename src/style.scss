@@ -1,0 +1,32 @@
+$app-bg: #f4f6f9;
+
+body {
+  background-color: $app-bg;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.app-container {
+  text-align: center;
+
+  .hello-world {
+    padding: 1rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+  }
+}
