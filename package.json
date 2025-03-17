@@ -9,10 +9,12 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "sass": "^1.85.1",
+    "sass": "1.77.6",
     "vite": "^6.2.0"
   },
   "dependencies": {
-    "@odoo/owl": "^2.6.1"
+    "@odoo/owl": "^2.6.1",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3"
   }
 }

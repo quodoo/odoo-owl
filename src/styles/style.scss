@@ -1,0 +1,360 @@
+@use "sass:math";
+@use "sass:color";
+
+
+// Custom Bootstrap variables
+$primary: #646cff;
+$border-radius: 8px;
+
+// Import Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+// Base Layout
+.question-palette {
+  & {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border-top: 1px solid #dee2e6;
+    z-index: 1000;
+    padding: 0.5rem 0;
+  }
+
+  .navigation-wrapper {
+    & {
+      padding: 0.5rem 0;
+      position: relative;
+    }
+
+    .progress-bar-wrapper {
+      & {
+        height: 4px;
+        background-color: #e9ecef;
+        margin-bottom: 1rem;
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .progress-indicator {
+        & {
+          height: 100%;
+          background-color: $primary;
+          transition: width 0.3s ease;
+        }
+      }
+    }
+
+    .section-navigation {
+      & {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        justify-content: center;
+        position: relative;
+      }
+
+      .nav-buttons {
+        & {
+          position: absolute;
+          right: 0;
+          display: flex;
+          gap: 0.5rem;
+        }
+      }
+
+      .section-indicators {
+        & {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+        }
+      }
+    }
+  }
+}
+
+.reading-test {
+  display: flex;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100vh;
+  padding: 2rem;
+
+  .reading-passage {
+    flex: 1;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow-y: auto;
+  }
+
+  .questions-section {
+    flex: 1;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow-y: auto;
+
+    .question-item {
+      margin-bottom: 1.5rem;
+      
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        label {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+// Writing Test Styles
+.writing-test {
+  display: flex;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100vh;
+  padding: 2rem;
+
+  .task-instructions {
+    flex: 1;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+    .task-prompt {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #f5f5f5;
+      border-radius: 4px;
+    }
+  }
+
+  .writing-section {
+    flex: 1;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+    .essay-input {
+      width: 100%;
+      height: 400px;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      resize: none;
+      margin-bottom: 1rem;
+    }
+
+    .word-count {
+      text-align: right;
+      color: #666;
+    }
+  }
+}
+
+// Thank You Screen Styles
+.thank-you-screen {
+  .card {
+    border: none;
+    border-radius: 1rem;
+    
+    .card-body {
+      .bi-check-circle-fill {
+        display: inline-block;
+        animation: scaleIn 0.5s ease-in-out;
+      }
+    }
+  }
+}
+
+// Footer Styles
+.question-palette {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border-top: 1px solid #dee2e6;
+  z-index: 1000;
+  padding: 0.5rem 0;
+
+  .navigation-wrapper {
+    padding: 0.5rem 0;
+    
+    .progress-bar-wrapper {
+      height: 4px;
+      background-color: #e9ecef;
+      margin-bottom: 1rem;
+      border-radius: 2px;
+      overflow: hidden;
+
+      .progress-indicator {
+        height: 100%;
+        background-color: $primary;
+        transition: width 0.3s ease;
+      }
+    }
+
+    .section-navigation {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+
+      .nav-buttons {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .section-indicators {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+
+        .indicator-item {
+          position: relative;
+          cursor: pointer;
+          padding: 0.5rem;
+          display: flex;
+          align-items: center;
+
+          .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #dee2e6;
+            transition: all 0.3s ease;
+          }
+
+          .info-tooltip {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 1rem;
+            border-radius: $border-radius;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.2s ease;
+            z-index: 1;
+
+            &::after {
+              content: '';
+              position: absolute;
+              top: 100%;
+              left: 50%;
+              transform: translateX(-50%);
+              border: 6px solid transparent;
+              border-top-color: white;
+            }
+
+            .info-title {
+              font-weight: 600;
+              font-size: 0.875rem;
+              margin-bottom: 0.5rem;
+              text-align: center;
+            }
+
+            .info-summary {
+              text-align: center;
+              color: #6c757d;
+              font-size: 0.875rem;
+              margin-bottom: 0.5rem;
+            }
+
+            .question-grid {
+              display: none;
+              grid-template-columns: repeat(4, 1fr);
+              gap: 0.5rem;
+              padding: 0.5rem;
+              
+              .question-number {
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                background: white;
+                cursor: pointer;
+                font-size: 0.875rem;
+                padding: 0;
+                transition: all 0.2s ease;
+                
+                &:hover {
+                  background-color: #e9ecef;
+                  border-color: $primary;
+                }
+                
+                &.answered {
+                  background-color: $primary;
+                  color: white;
+                  border-color: $primary;
+                }
+              }
+            }
+          }
+
+          &:hover {
+            .dot {
+              transform: scale(1.1);
+              background-color: lighten($primary, 10%);
+            }
+
+            .info-tooltip {
+              visibility: visible;
+              opacity: 1;
+            }
+          }
+
+          &.active {
+            .dot {
+              background-color: $primary;
+              transform: scale(1.2);
+            }
+
+            .info-tooltip {
+              visibility: visible;
+              opacity: 1;
+
+              .question-grid {
+                display: grid;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animation
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
