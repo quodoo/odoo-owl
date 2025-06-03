@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  nginx:
+    container_name: odoo-nginx-prod
+    build: 
+      context: .
+      # dockerfile: Dockerfile.prod
+    ports:
+      - "80:80"
+    networks:
+      - odoo-network
+
+networks:
+  odoo-network:
+    name: odoo-network
+    driver: bridge 
