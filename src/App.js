@@ -9,6 +9,6 @@ export class App extends Component {
 
 App.template = xml`
 <div class="app-container">
-  <HelloWorld incrementBy="2"/>
+  <HelloWorld incrementBy="3"/>
 </div>
 `;
