@@ -7,7 +7,7 @@ A modern frontend project template using Odoo OWL framework with Vite, Docker, a
 ## Application Structure
 
 ```
-odoo-owl-app/
+odoo-owl/
 ├── build.sh                # Script to build static files using Docker multi-stage
 ├── docker-compose.yml      # Docker Compose for development (hot reload)
 ├── docker-compose.prd.yml  # Docker Compose for production (Nginx serve static)
